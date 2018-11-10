@@ -3,5 +3,4 @@
 
 <@common.page>
     <@login.login "/login" />
-    <a href="/registration"><button class="button">Registration</button></a>
 </@common.page>
