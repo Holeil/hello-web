@@ -9,15 +9,15 @@ import java.util.Date;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
+@Table(name = "usr")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String password;
-    private String DateRegistration;
-    private String LustLogin;
+    private String dateRegistration;
+    private String lustLogin;
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -35,10 +35,6 @@ public class User implements UserDetails {
 
     public String getUsername() {
         return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     @Override
@@ -61,9 +57,13 @@ public class User implements UserDetails {
         return isActive();
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return getRoles();
     }
 
     public String getPassword() {
@@ -90,21 +90,12 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
-    public String getDateRegistration() {
-        return DateRegistration;
-    }
+    public void setDateRegistration() { this.dateRegistration = new Date().toString(); }
 
-    public void setDateRegistration() {
-        DateRegistration = new Date().toString();
-    }
+    public  String getDateRegistration() { return this.dateRegistration;}
 
-    public String getLustLogin() {
-        return LustLogin;
-    }
+    public void setLustLogin() { this.lustLogin = new Date().toString(); }
 
-    public void setLustLogin() {
-        LustLogin = new Date().toString();
-    }
-
+    public  String getLustLogin() { return this.lustLogin; }
 
 }
