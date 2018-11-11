@@ -2,5 +2,6 @@
 <#import "parts/login.ftl" as login>
 
 <@common.page>
-    <@login.login "/login" />
+    <div class="ml-1">Login</div>
+    <@login.login "/login" false />
 </@common.page>
