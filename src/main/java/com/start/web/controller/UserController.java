@@ -15,20 +15,19 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/user")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
     private UserRepo userRepo;
 
-    @GetMapping
+    @GetMapping("/user")
     public String userList(Model model) {
         model.addAttribute("users", userRepo.findAll());
 
         return "userList";
     }
 
-    @GetMapping("{user}")
+    @GetMapping("/user/{user}")
     public String userEditForm(@PathVariable User user, Model model) {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
@@ -36,7 +35,7 @@ public class UserController {
         return "userEdit";
     }
 
-    @PostMapping
+    @PostMapping("/changeUser")
     public String userSave(
             @RequestParam String username,
             @RequestParam Map<String, String> form,
@@ -55,6 +54,31 @@ public class UserController {
                 user.getRoles().add(Role.valueOf(key));
             }
         }
+
+        userRepo.save(user);
+
+       return "redirect:/user";
+    }
+
+    @PostMapping("/deleteUser")
+    public String deleteUser(@RequestParam("userId") User user ) {
+        userRepo.delete(user);
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/blockUser")
+    public String blockUser(@RequestParam("userId") User user) {
+        user.getRoles().clear();
+
+        userRepo.save(user);
+
+        return "redirect:/user";
+    }
+
+    @PostMapping("/unblockUser")
+    public String unblockUser(@RequestParam("userId") User user) {
+        user.getRoles().add(Role.USER);
 
         userRepo.save(user);
 
