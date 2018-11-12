@@ -16,8 +16,6 @@ public class User implements UserDetails {
     private Long id;
     private String username;
     private String password;
-    private String dateRegistration;
-    private String lustLogin;
     private boolean active;
 
     private String email;
@@ -96,14 +94,6 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
-
-    public void setDateRegistration() { this.dateRegistration = new Date().toString(); }
-
-    public  String getDateRegistration() { return this.dateRegistration;}
-
-    public void setLustLogin() { this.lustLogin = new Date().toString(); }
-
-    public  String getLustLogin() { return this.lustLogin; }
 
     public String getEmail() {
         return email;

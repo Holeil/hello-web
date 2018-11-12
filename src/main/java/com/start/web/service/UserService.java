@@ -35,8 +35,6 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
-        user.setLustLogin();
-        user.setDateRegistration();
         user.setActivationCode(UUID.randomUUID().toString());
 
         Set<Role> roles = new HashSet<>();
