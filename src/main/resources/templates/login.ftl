@@ -3,5 +3,6 @@
 
 <@common.page>
     <div class="ml-1">Login</div>
+    ${message?ifExists}
     <@login.login "/login" false />
 </@common.page>

@@ -7,6 +7,14 @@
                 <input type="text" id="inputUsername3" name="username" class="formal-control" placeholder="User name" required />
             </div>
         </div>
+        <#if isRegisterForm>
+            <div class="form-group row">
+                <label for="inputEmail3" class="col-sm-2 col-form-label">Email:</label>
+                <div class="col-sm-6">
+                    <input type="email" id="inputEmail3" name="email" class="formal-control" placeholder="Email" required />
+                </div>
+            </div>
+        </#if>
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Password:</label>
             <div class="col-sm-6">
