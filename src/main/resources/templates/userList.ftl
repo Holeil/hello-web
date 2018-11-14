@@ -9,12 +9,6 @@
                     Username
                 </th>
                 <th>
-                    Date Registration
-                </th>
-                <th>
-                    Lust Login
-                </th>
-                <th>
                     Role
                 </th>
                 <th>
@@ -27,12 +21,6 @@
             <tr>
                 <td>
                     ${user.getUsername()}
-                </td>
-                <td>
-                    ${user.getDateRegistration()}
-                </td>
-                <td>
-                    ${user.getLustLogin()}
                 </td>
                 <td>
                     <#list user.roles as role>

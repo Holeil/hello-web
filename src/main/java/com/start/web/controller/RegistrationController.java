@@ -1,7 +1,7 @@
 package com.start.web.controller;
 
 import com.start.web.domain.User;
-import com.start.web.service.UserService;
+import com.start.web.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,9 +13,8 @@ import java.util.Map;
 
 @Controller
 public class RegistrationController {
-
     @Autowired
-    private UserService userService;
+    private UserSevice userSevice;
 
     @GetMapping("/registration")
     public String registration() {
@@ -24,20 +23,19 @@ public class RegistrationController {
 
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model) {
-
-        if (!userService.addUser(user)) {
+        if (!userSevice.addUser(user)) {
             model.put("message", "User exists!");
             return "registration";
         }
 
-        return "redirect:/";
+        return "redirect:/login";
     }
 
     @GetMapping("/activate/{code}")
     public String activate(Model model, @PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
+        boolean isActivated = userSevice.activateUser(code);
 
-        if(isActivated) {
+        if (isActivated) {
             model.addAttribute("message", "User successfully activated");
         } else {
             model.addAttribute("message", "Activation code is not found!");

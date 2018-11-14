@@ -5,7 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -28,6 +27,10 @@ public class User implements UserDetails {
 
     public boolean isRole(String role) {
         return roles.contains(Role.valueOf(role));
+    }
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
     }
 
     public Long getId() {

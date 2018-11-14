@@ -57,7 +57,7 @@ public class UserController {
 
         userRepo.save(user);
 
-       return "redirect:/user";
+        return "redirect:/user";
     }
 
     @PostMapping("/deleteUser")

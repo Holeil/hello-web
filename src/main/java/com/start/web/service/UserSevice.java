@@ -1,8 +1,8 @@
-package com.example.sweater.service;
+package com.start.web.service;
 
-import com.example.sweater.domain.Role;
-import com.example.sweater.domain.User;
-import com.example.sweater.repos.UserRepo;
+import com.start.web.domain.Role;
+import com.start.web.domain.User;
+import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,7 +13,7 @@ import org.springframework.util.StringUtils;
 import java.util.*;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserSevice implements UserDetailsService {
     @Autowired
     private UserRepo userRepo;
 

@@ -14,6 +14,7 @@ public class MailSender {
     @Value("${spring.mail.username}")
     private String username;
 
+
     public void send(String emailTo, String subject, String message) {
         SimpleMailMessage mailMessage = new SimpleMailMessage();
 
@@ -24,4 +25,4 @@ public class MailSender {
 
         mailSender.send(mailMessage);
     }
-} 
+}
