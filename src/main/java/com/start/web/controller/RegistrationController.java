@@ -1,22 +1,24 @@
 package com.start.web.controller;
 
-import com.start.web.domain.Role;
 import com.start.web.domain.User;
-import com.start.web.repos.UserRepo;
+import com.start.web.service.UserSevice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.HashSet;
+import javax.validation.Valid;
 import java.util.Map;
-import java.util.Set;
 
 @Controller
 public class RegistrationController {
-
     @Autowired
-    private UserRepo userRepo;
+    private UserSevice userSevice;
 
     @GetMapping("/registration")
     public String registration() {
@@ -24,24 +26,48 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String addUser(User user, Map<String, Object> model) {
-        User userFromDb = userRepo.findByUsername(user.getUsername());
+    public String addUser(@RequestParam("password2") String passwordConfirmation,
+                          @Valid User user,
+                          BindingResult bindingResult,
+                          Model model) {
+        boolean isConfirmEmpty = StringUtils.isEmpty(passwordConfirmation);
 
-        if (userFromDb != null) {
-            model.put("message", "User exists!");
+        if(isConfirmEmpty) {
+            model.addAttribute("password2Error", "Password confirmation cannot empty");
+        }
+
+        if (user.getPassword() != null && !user.getPassword().equals(passwordConfirmation)) {
+            model.addAttribute("passwordError", "Passwords are different!");
+        }
+
+        if (isConfirmEmpty || bindingResult.hasErrors()) {
+            Map<String, String> errors = ControllerUtils.getErrors(bindingResult);
+
+            model.mergeAttributes(errors);
+
             return "registration";
         }
 
-        user.setActive(true);
-        user.setLustLogin();
-        user.setDateRegistration();
-
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        user.setRoles(roles);
-
-        userRepo.save(user);
+        if (!userSevice.addUser(user)) {
+            model.addAttribute("usernameError", "User exists!");
+            return "registration";
+        }
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code) {
+        boolean isActivated = userSevice.activateUser(code);
+
+        if (isActivated) {
+            model.addAttribute("messageType", "success");
+            model.addAttribute("message", "User successfully activated");
+        } else {
+            model.addAttribute("messageType", "danger");
+            model.addAttribute("message", "Activation code is not found!");
+        }
+
+        return "login";
     }
 }
