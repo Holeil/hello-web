@@ -10,6 +10,7 @@
                         <th scope="col">Id</th>
                         <th scope="col">Username</th>
                         <th scope="col">Role</th>
+                        <th scope="col">Choose</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,13 +23,19 @@
                                 ${role} <#sep>,
                             </#list>
                         </td>
+                        <td><input type="checkbox" name="${user.getUsername()}"/></td>
                     </tr>
                     </#list>
                 </tbody>
             </table>
         </div>
         <div class="footer">
-            <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete users</a>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <div class="btn btn-secondary" role="button">Choose all</div>
+                <a class="btn btn-secondary" href="#" role="button">Block users</a>
+                <a class="btn btn-secondary" href="#" role="button">Unblock users</a>
+                <a class="btn btn-secondary" href="#" role="button">Delete users</a>
+            </div>
         </div>
     </div>
 </@common.page>
