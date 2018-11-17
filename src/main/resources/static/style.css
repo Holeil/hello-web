@@ -1,3 +1,20 @@
-body {
-    color: #113;
+.user-profile {
+    display: flex;
+    border: 1px solid rgba(152, 164, 183, 0.4);
+    padding: 6px;
+}
+
+.user-information {
+    border-right: 1px solid rgba(152, 164, 183, 0.4);
+    width: 25%;
+    word-wrap: break-word;
+}
+
+.user-notes {
+    width: 75%;
+    padding-left: 6px;
+}
+
+.footer {
+    text-align: right;
 }

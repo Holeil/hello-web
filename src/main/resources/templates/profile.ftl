@@ -1,22 +1,53 @@
-<#import "parts/common.ftl" as c>
+<#import "parts/common.ftl" as common>
 
-<@c.page>
-<h5>${username}</h5>
-    ${message?ifExists}
-<form method="post">
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="inputPassword3">Password:</label>
-        <div class="col-sm-6">
-            <input type="password" name="password" class="form-control" id="inputPassword3" placeholder="Password" required/>
+<@common.page>
+<h2 class="mb-4">User: ${user.getUsername()}</h2>
+<div class="user-profile">
+    <div class="user-information">
+        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> НЕТУ</#if></span></div>
+        <div><h5>Information about user:</h5><span>Other information..................</span></div>
+    </div>
+    <div class="user-notes wrapper">
+        <div class="content">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Название</th>
+                <th scope="col">Номер специальности</th>
+                <th scope="col">Действия</a></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
+                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
+                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete</a>
+                </td>
+            </tr>
+            <tr>
+                <td>Larry</td>
+                <td>the Bird</td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
+                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+        <div class="footer">
+            <a class="btn btn-primary" href="/user/${user.getId()}/notecreate" role="button">Create note</a>
         </div>
     </div>
-    <div class="form-group row">
-        <label class="col-sm-2 col-form-label" for="inputEmail3">Email:</label>
-        <div class="col-sm-6">
-            <input type="email" name="email" class="form-control" id="inputEmail3" placeholder="some@some.com" value="${email!''}"/>
-        </div>
-    </div>
-    <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <button class="btn btn-primary" type="submit">Save</button>
-</form>
-</@c.page>
+</div>
+</@common.page>
