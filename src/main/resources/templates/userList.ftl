@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as common>
 
 <@common.page>
-    <div class="wrapper">
+    <form action="/user/change" method="post">
         <div class="content">
             <h2>List of Users</h2>
             <table class="table">
@@ -23,7 +23,7 @@
                                 ${role} <#sep>,
                             </#list>
                         </td>
-                        <td><input type="checkbox" name="${user.getUsername()}"/></td>
+                        <td><input type="checkbox" class="toCheck" name="${user.getUsername()}"/></td>
                     </tr>
                     </#list>
                 </tbody>
@@ -31,11 +31,11 @@
         </div>
         <div class="footer">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <div class="btn btn-secondary" role="button">Choose all</div>
-                <a class="btn btn-secondary" href="#" role="button">Block users</a>
-                <a class="btn btn-secondary" href="#" role="button">Unblock users</a>
-                <a class="btn btn-secondary" href="#" role="button">Delete users</a>
+                <button type="button" class="btn btn-secondary" role="button" id="choose-all-users">Choose all</button>
+                <button class="btn btn-secondary" name="block-users" role="button">Block users</button>
+                <button class="btn btn-secondary" name="unblock-users" role="button">Unblock users</button>
+                <button class="btn btn-secondary" name="delete-users" role="button">Delete users</button>
             </div>
         </div>
-    </div>
+    </form>
 </@common.page>

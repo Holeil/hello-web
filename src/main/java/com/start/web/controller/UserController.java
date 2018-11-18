@@ -1,6 +1,5 @@
 package com.start.web.controller;
 
-import com.start.web.domain.Role;
 import com.start.web.domain.User;
 import com.start.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +51,11 @@ public class UserController {
         model.addAttribute("user", user);
 
         return "profile";
+    }
+
+    @PostMapping("/change")
+    public String change() {
+        return "redirect:/user";
     }
 
 }
