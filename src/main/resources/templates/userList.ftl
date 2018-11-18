@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as common>
 
 <@common.page>
-    <form action="/user/change" method="post">
+    <form action="/user/changeUserList" method="post">
         <div class="content">
             <h2>List of Users</h2>
             <table class="table">
@@ -23,7 +23,7 @@
                                 ${role} <#sep>,
                             </#list>
                         </td>
-                        <td><input type="checkbox" class="toCheck" name="${user.getUsername()}"/></td>
+                        <td><label><input type="checkbox" class="toCheck" name="${user.getUsername()}"></label></td>
                     </tr>
                     </#list>
                 </tbody>
@@ -31,11 +31,13 @@
         </div>
         <div class="footer">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary" role="button" id="choose-all-users">Choose all</button>
-                <button class="btn btn-secondary" name="block-users" role="button">Block users</button>
-                <button class="btn btn-secondary" name="unblock-users" role="button">Unblock users</button>
-                <button class="btn btn-secondary" name="delete-users" role="button">Delete users</button>
+                <input type="button" class="btn btn-secondary" name="choose-all-users" value="Choose all" id="choose-all-users">
+                <input type="submit" class="btn btn-secondary" name="block-users" value="Block users">
+                <input type="submit" class="btn btn-secondary" name="unblock-users" value="Unblock users">
+                <input type="submit" class="btn btn-secondary" name="set-admin" value="Add admin">
+                <input type="submit" class="btn btn-secondary" name="delete-users" value="Delete users">
             </div>
         </div>
+        <input type="hidden" value="${_csrf.token}" name="_csrf">
     </form>
 </@common.page>
