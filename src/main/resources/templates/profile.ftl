@@ -4,7 +4,7 @@
 <h2 class="mb-4">User: ${user.getUsername()}</h2>
 <div class="user-profile">
     <div class="user-information">
-        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> НЕТУ</#if></span></div>
+        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> none</#if></span></div>
         <div><h5>Information about user:</h5><span>Other information..................</span></div>
     </div>
     <div class="user-notes wrapper">

@@ -38,7 +38,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
 
-       return "userEdit";
+       return "profile";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -130,7 +130,6 @@ public class UserController {
 
         if(exit) {
             SecurityContextHolder.clearContext();
-
         }
 
         return "redirect:/user";
