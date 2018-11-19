@@ -11,37 +11,28 @@
         <div class="content">
         <table class="table">
             <thead>
-            <tr>
-                <th scope="col">Название</th>
-                <th scope="col">Номер специальности</th>
-                <th scope="col">Действия</a></th>
-            </tr>
+                <tr>
+                    <th scope="col">Название</th>
+                    <th scope="col">Номер специальности</th>
+                    <th scope="col">Действия</a></th>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>
-                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
-                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>
-                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
-                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete</a>
-                </td>
-            </tr>
-            <tr>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>
-                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
-                    <a class="btn btn-outline-primary btn-sm" href="#" role="button">Delete</a>
-                </td>
-            </tr>
+                <#list messages as message>
+                <tr>
+                    <td>${message.title}</td>
+                    <td>${message.specialty}</td>
+                    <td>
+                        <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
+                        <form action="/user/${user.id}/deletemessage" method="post" style="display: inline-block">
+                            <input type="hidden" name="userId" value="${user.id}">
+                            <input type="hidden" name="id" value="${message.id}" />
+                            <input type="submit" value="Delete" class="btn btn-outline-primary btn-sm" />
+                            <input type="hidden" value="${_csrf.token}" name="_csrf">
+                        </form>
+                    </td>
+                </tr>
+                </#list>
             </tbody>
         </table>
         </div>

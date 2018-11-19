@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Message {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
 
     private String title;
     private String specialty;
@@ -48,11 +48,11 @@ public class Message {
         return text;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -72,11 +72,11 @@ public class Message {
         this.title = title;
     }
 
-    public String getSpecialtyNumber() {
+    public String getSpecialty() {
         return specialty;
     }
 
-    public void setSpecialtyNumber(String specialty) {
+    public void setSpecialty(String specialty) {
         this.specialty = specialty;
     }
 }

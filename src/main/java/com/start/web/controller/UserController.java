@@ -1,7 +1,9 @@
 package com.start.web.controller;
 
+import com.start.web.domain.Message;
 import com.start.web.domain.Role;
 import com.start.web.domain.User;
+import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import com.start.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,9 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     @Autowired
+    private MessageRepo messageRepo;
+
+    @Autowired
     private UserRepo userRepo;
 
     @Autowired
@@ -35,6 +40,9 @@ public class UserController {
     @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("{user}")
     public String userEditForm(@PathVariable User user, Model model) {
+        Iterable<Message> userMessages = messageRepo.findByAuthor(user);
+
+        model.addAttribute("messages", userMessages);
         model.addAttribute("user", user);
 
        return "profile";
@@ -42,6 +50,9 @@ public class UserController {
 
     @GetMapping("/profile")
     public String getProfile(Model model, @AuthenticationPrincipal User user) {
+        Iterable<Message> userMessages = messageRepo.findByAuthor(user);
+
+        model.addAttribute("messages", userMessages);
         model.addAttribute("user", user);
 
         return "profile";

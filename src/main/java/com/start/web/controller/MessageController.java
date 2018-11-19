@@ -31,10 +31,24 @@ public class MessageController {
                              @RequestParam String specialty,
                              @RequestParam String text,
                              @RequestParam String tag) {
-        Message message = new Message(title, specialty, text, tag, user);
+        if(!(user == null || title.equals("") || specialty.equals("") || text.equals("") || tag.equals(""))) {
+            Message message = new Message(title, specialty, text, tag, user);
 
-        messageRepo.save(message);
-        
+            messageRepo.save(message);
+        }
+
+        if(authUser.isRole("ADMIN")) {
+            return "redirect:/user/" + user.getId();
+        }
+        else return "redirect:/user/profile";
+    }
+
+    @PostMapping("/user/{user}/deletemessage")
+    public String deleteMessage(@AuthenticationPrincipal User authUser,
+                                @RequestParam("userId") User user,
+                                @RequestParam("id") String id) {
+        messageRepo.deleteById(Long.parseLong(id));
+
         if(authUser.isRole("ADMIN")) {
             return "redirect:/user/" + user.getId();
         }
