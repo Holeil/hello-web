@@ -15,16 +15,17 @@
                 </li>
             </#if>
         </ul>
-        <div class="navbar-text mr-3">
-            <a class="nav-link" href="/user/profile">${name}</span></a>
-        </div>
+        <#if user??>
+            <div class="navbar-text mr-3">
+                <a class="nav-link" href="<#if isAdmin>/user/${userId}</#if>
+                                           <#if !isAdmin>/user/profile</#if>">${name}</span></a>
+            </div>
+            <@login.logout />
+        </#if>
         <#if !user??>
             <a href="/login"><button type="submit" class="btn btn-primary">
                 Login</button></span>
             </a>
-        </#if>
-        <#if user??>
-            <@login.logout />
         </#if>
     </div>
 </nav>
