@@ -7,6 +7,7 @@ import com.start.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +65,7 @@ public class UserController {
     public String changeUserList(@RequestParam Map<String, String> form,
                                  @AuthenticationPrincipal User user) {
         List<User> users = userService.findAll();
-        boolean authUserNoAccess = false;
+        boolean exit = false;
 
         if(form.keySet().contains("set-admin")) {
             for(String key : form.keySet()){
@@ -83,10 +84,14 @@ public class UserController {
         }
         else if(form.keySet().contains("delete-users")) {
             for(String key : form.keySet()){
-                if(user.getUsername().equals(userRepo.findByUsername(key).getUsername()))
-                    authUserNoAccess = true;
 
                 if(users.contains(userRepo.findByUsername(key))) {
+                    User user1 = userRepo.findByUsername(key);
+
+                    if(user.getId().equals(user1.getId())) {
+                        exit = true;
+                    }
+
                     userRepo.delete(userRepo.findByUsername(key));
 
                 }
@@ -95,11 +100,13 @@ public class UserController {
         }
         else if(form.keySet().contains("block-users")) {
             for(String key : form.keySet()){
-                if(user.getUsername().equals(userRepo.findByUsername(key).getUsername()))
-                    authUserNoAccess = true;
 
                 if(users.contains(userRepo.findByUsername(key))) {
                     User user1 = userRepo.findByUsername(key);
+
+                    if(user.getId().equals(user1.getId())) {
+                        exit = true;
+                    }
 
                     user1.getRoles().clear();
 
@@ -121,7 +128,8 @@ public class UserController {
             }
         }
 
-        if(authUserNoAccess) {
+        if(exit) {
+            SecurityContextHolder.clearContext();
 
         }
 
