@@ -46,7 +46,7 @@
         </table>
         </div>
         <div class="footer">
-            <a class="btn btn-primary" href="/user/${user.getId()}/notecreate" role="button">Create note</a>
+            <a class="btn btn-primary" href="/user/${user.getId()}/addmessage" role="button">Create note</a>
         </div>
     </div>
 </div>

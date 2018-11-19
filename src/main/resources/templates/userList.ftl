@@ -40,4 +40,5 @@
         </div>
         <input type="hidden" value="${_csrf.token}" name="_csrf">
     </form>
+<script src="/script/script.js"></script>
 </@common.page>

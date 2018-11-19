@@ -9,7 +9,7 @@ public class Message {
     private Integer id;
 
     private String title;
-    private String specialtyNumber;
+    private String specialty;
     private String text;
     private String tag;
 
@@ -20,8 +20,10 @@ public class Message {
     public Message() {
     }
 
-    public Message(String text, String tag, User user) {
+    public Message(String title, String specialty, String text, String tag, User user) {
+        this.specialty = specialty;
         this.author = user;
+        this.title = title;
         this.text = text;
         this.tag = tag;
     }
@@ -71,10 +73,10 @@ public class Message {
     }
 
     public String getSpecialtyNumber() {
-        return specialtyNumber;
+        return specialty;
     }
 
-    public void setSpecialtyNumber(String specialtyNumber) {
-        this.specialtyNumber = specialtyNumber;
+    public void setSpecialtyNumber(String specialty) {
+        this.specialty = specialty;
     }
 }

@@ -14,7 +14,7 @@ public class MainController {
 
     @GetMapping("/")
     public String greeting(Model model) {
-        model.addAttribute("message", messageRepo.findAll());
+        model.addAttribute("messages", messageRepo.findAll());
 
         return "main";
     }
