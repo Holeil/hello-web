@@ -23,7 +23,7 @@
                     <td>${message.title}</td>
                     <td>${message.specialty}</td>
                     <td>
-                        <a class="btn btn-outline-primary btn-sm" href="#" role="button">Edit</a>
+                        <a class="btn btn-outline-primary btn-sm" href="/user/${user.id}/message${message.id}" role="button">Edit</a>
                         <form action="/user/${user.id}/deletemessage" method="post" style="display: inline-block">
                             <input type="hidden" name="userId" value="${user.id}">
                             <input type="hidden" name="id" value="${message.id}" />

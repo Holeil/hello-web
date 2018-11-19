@@ -2,5 +2,5 @@
 <#import "parts/messages.ftl" as messages>
 
 <@common.page>
-    <@messages.messages "addmessage" false/>
+    <@messages.messages "updatemessage" true/>
 </@common.page>

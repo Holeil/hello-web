@@ -54,4 +54,39 @@ public class MessageController {
         }
         else return "redirect:/user/profile";
     }
+
+    @GetMapping("/user/{user}/message{message}")
+    public String deleteMessage(@PathVariable User user,
+                                @PathVariable Message message,
+                                Model model) {
+        model.addAttribute("message", message);
+        model.addAttribute("user", user);
+
+        return "updatemessage";
+    }
+
+    @PostMapping("/user/{user}/updatemessage")
+    public String updateMessage(@AuthenticationPrincipal User authUser,
+                                @PathVariable User user,
+                                @RequestParam("messageId") Message message,
+                                @RequestParam String title,
+                                @RequestParam String specialty,
+                                @RequestParam String text,
+                                @RequestParam String tag) {
+        if(!(title.equals("") || specialty.equals("") || text.equals("") || tag.equals(""))) {
+            message.setTitle(title);
+            message.setSpecialty(specialty);
+            message.setText(text);
+            message.setTag(tag);
+
+            messageRepo.save(message);
+        }
+
+        if(authUser.isRole("ADMIN")) {
+            return "redirect:/user/" + user.getId();
+        }
+        else return "redirect:/user/profile";
+    }
+
+
 } 
