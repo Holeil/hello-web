@@ -4,8 +4,8 @@
 <h2 class="mb-4">User: ${user.getUsername()}</h2>
 <div class="user-profile">
     <div class="user-information">
-        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> none</#if></span></div>
-        <div><h5>Information about user:</h5><span>Other information..................</span></div>
+        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> none</#if></span></div><!--Добавить отображение того, что юзер подтвердил свой мэил, или нет-->
+        <div><h5>Information about user:</h5><span>Other information..................</span></div><!--Добавить возможность редактировать свой профиль-->
     </div>
     <div class="user-notes wrapper">
         <div class="content">
@@ -29,9 +29,9 @@
                             <input type="hidden" name="id" value="${message.id}" />
                             <input type="submit" value="Delete" class="btn btn-outline-primary btn-sm" />
                             <input type="hidden" value="${_csrf.token}" name="_csrf">
+                            <!-- Добавить сортировки конспектов-->
                         </form>
-                    </td>
-                </tr>
+                    </td><!-- Добавить переход на страницу конспекта-->
                 </#list>
             </tbody>
         </table>

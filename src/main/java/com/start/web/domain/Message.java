@@ -3,9 +3,10 @@ package com.start.web.domain;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "message")
 public class Message {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO) // айдишники общие на все таблицы, поэтому уберу отображение id на странице
     private Long id;
 
     private String title;

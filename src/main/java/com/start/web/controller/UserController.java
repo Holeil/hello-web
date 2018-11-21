@@ -107,6 +107,7 @@ public class UserController {
                     }
 
                     user1.getRoles().clear();
+                    user1.getRoles().add(Role.BLOCKED);
 
                     userRepo.save(user1);
                 }

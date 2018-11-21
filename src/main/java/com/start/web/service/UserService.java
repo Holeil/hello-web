@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
+        user.setRoles(Collections.singleton(Role.BLOCKED));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()) );
 
@@ -76,6 +76,8 @@ public class UserService implements UserDetailsService {
         }
 
         user.setActivationCode(null);
+        user.getRoles().clear();
+        user.getRoles().add(Role.USER); //Добавление роли USER после подтверждения мыла, до подтверждения роль BLOCKED.
 
         userRepo.save(user);
 

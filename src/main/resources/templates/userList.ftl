@@ -7,7 +7,6 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Username</th>
                         <th scope="col">Role</th>
                         <th scope="col">Choose</th>
@@ -16,7 +15,6 @@
                 <tbody>
                     <#list users as user>
                     <tr>
-                        <th scope="row">${user.getId()}</th>
                         <td><a href="/user/${user.id}">${user.getUsername()}</a></td>
                         <td>
                             <#list user.roles as role>

@@ -14,7 +14,6 @@
     <#assign
         name = "unknown"
         userId = -1
-        user = false
         isUser = false
         isAdmin = false
     >
