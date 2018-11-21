@@ -26,14 +26,14 @@ public class MessageController {
     private CommentRepo commentRepo;
 
     @GetMapping("/user/{user}/addmessage")
-    public String createNote(@PathVariable User user, Model model) {
+    public String createMessagePage(@PathVariable User user, Model model) {
         model.addAttribute("user", user);
 
         return "addmessage";
     }
 
     @PostMapping("/user/{user}/addmessage")
-    public String addMessage(@AuthenticationPrincipal User authUser,
+    public String createMessage(@AuthenticationPrincipal User authUser,
                              @PathVariable User user,
                              @RequestParam String title,
                              @RequestParam String specialty,
@@ -53,9 +53,11 @@ public class MessageController {
 
     @PostMapping("/user/{user}/deletemessage")
     public String deleteMessage(@AuthenticationPrincipal User authUser,
-                                @RequestParam("userId") User user,
-                                @RequestParam("id") String id) {
-        messageRepo.deleteById(Long.parseLong(id));
+                                @PathVariable User user,
+                                @RequestParam("messageId") Message message) {
+        commentRepo.deleteAll(commentRepo.findByMessage(message));
+
+        messageRepo.delete(message);
 
         if(authUser.isRole("ADMIN")) {
             return "redirect:/user/" + user.getId();
@@ -64,7 +66,7 @@ public class MessageController {
     }
 
     @GetMapping("/user/{user}/message{message}")
-    public String deleteMessage(@PathVariable User user,
+    public String updateMessagePage(@PathVariable User user,
                                 @PathVariable Message message,
                                 Model model) {
         model.addAttribute("message", message);

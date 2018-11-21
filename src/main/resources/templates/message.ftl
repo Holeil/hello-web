@@ -3,7 +3,7 @@
 <#include "parts/security.ftl">
 
 <@common.page>
-    <div class="card center-block mb-5">
+    <div class="card center-block mb-2">
         <div class="card-header"><h5>${message.title}</h5><h6>${message.specialty}</h6></div>
         <div class="card-body">
             <p class="card-text">${message.text}</p>
@@ -24,7 +24,7 @@
             </div>
         </#list>
     </div>
-    <#if user??>
+    <#if isUser>
         <form action="/message/${message.id}/addcomment" method="post">
             <textarea class="form-control" name="text" placeholder="Your comments.."></textarea>
             <input type="submit" class="btn btn-primary"/>
