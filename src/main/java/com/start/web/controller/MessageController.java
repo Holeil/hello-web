@@ -1,12 +1,11 @@
 package com.start.web.controller;
 
-import com.start.web.domain.Comment;
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
+import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,70 +13,77 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 @Controller
 public class MessageController {
+    @Autowired
+    private UserRepo userRepo;
+
     @Autowired
     private MessageRepo messageRepo;
 
     @Autowired
     private CommentRepo commentRepo;
 
-    @GetMapping("/user/{user}/addmessage")
-    public String createMessagePage(@PathVariable User user, Model model) {
+    @GetMapping("/message/{message}")
+    public String messagePage(@PathVariable Message message,
+                              Model model) {
+        model.addAttribute("message", message);
+        model.addAttribute("comments", commentRepo.findByMessage(message));
+
+        return "message";
+    }
+
+    @GetMapping("/profile/{username}/addmessage")
+    public String createMessagePage(@PathVariable String username,
+                                    Model model) {
+        User user = userRepo.findByUsername(username);
+
         model.addAttribute("user", user);
 
         return "addmessage";
     }
 
-    @PostMapping("/user/{user}/addmessage")
-    public String createMessage(@AuthenticationPrincipal User authUser,
-                             @PathVariable User user,
-                             @RequestParam String title,
-                             @RequestParam String specialty,
-                             @RequestParam String text,
-                             @RequestParam String tag) {
+    @PostMapping("/profile/{username}/addmessage")
+    public String createMessage(@PathVariable String username,
+                                @RequestParam String title,
+                                @RequestParam String specialty,
+                                @RequestParam String text,
+                                @RequestParam String tag) {
+        User user = userRepo.findByUsername(username);
+
         if(!(user == null || title.equals("") || specialty.equals("") || text.equals("") || tag.equals(""))) {
             Message message = new Message(title, specialty, text, tag, user);
 
             messageRepo.save(message);
         }
 
-        if(authUser.isRole("ADMIN")) {
-            return "redirect:/user/" + user.getId();
-        }
-        else return "redirect:/user/profile";
+        return "redirect:/profile/" + username;
     }
 
-    @PostMapping("/user/{user}/deletemessage")
-    public String deleteMessage(@AuthenticationPrincipal User authUser,
-                                @PathVariable User user,
+    @PostMapping("/profile/{username}/deletemessage")
+    public String deleteMessage(@PathVariable String username,
                                 @RequestParam("messageId") Message message) {
         commentRepo.deleteAll(commentRepo.findByMessage(message));
 
         messageRepo.delete(message);
 
-        if(authUser.isRole("ADMIN")) {
-            return "redirect:/user/" + user.getId();
-        }
-        else return "redirect:/user/profile";
+        return "redirect:/profile/" + username;
     }
 
-    @GetMapping("/user/{user}/message{message}")
-    public String updateMessagePage(@PathVariable User user,
+    @GetMapping("/profile/{username}/message{message}")
+    public String updateMessagePage(@PathVariable String username,
                                     @PathVariable Message message,
                                     Model model) {
+        User user = userRepo.findByUsername(username);
+
         model.addAttribute("message", message);
         model.addAttribute("user", user);
 
         return "updatemessage";
     }
 
-    @PostMapping("/user/{user}/updatemessage")
-    public String updateMessage(@AuthenticationPrincipal User authUser,
-                                @PathVariable User user,
+    @PostMapping("/profile/{username}/updatemessage")
+    public String updateMessage(@PathVariable String username,
                                 @RequestParam("messageId") Message message,
                                 @RequestParam String title,
                                 @RequestParam String specialty,
@@ -92,31 +98,7 @@ public class MessageController {
             messageRepo.save(message);
         }
 
-        if(authUser.isRole("ADMIN")) {
-            return "redirect:/user/" + user.getId();
-        }
-        else return "redirect:/user/profile";
+        return "redirect:/profile/" + username;
     }
 
-    @GetMapping("/message/{message}")
-    public String messagePage(@PathVariable Message message,
-                              Model model) {
-        model.addAttribute("message", message);
-        model.addAttribute("comments", commentRepo.findByMessage(message));
-
-        return "message";
-    }
-
-    @PostMapping("/message/{message}/addcomment")
-    public String addComment(@PathVariable Message message,
-                             @AuthenticationPrincipal User user,
-                             @RequestParam String text) {
-        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-
-        Comment comment = new Comment(text, date, user, message);
-
-        commentRepo.save(comment);
-
-        return "redirect:/message/" + message.getId();
-    }
 } 

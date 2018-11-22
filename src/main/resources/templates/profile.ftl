@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 <#list messages as message>
-                <tr>
+                    <tr>
                         <td>
                             <a href="/message/${message.id}" style="text-decoration: none; color: black;">
                                 ${message.title}
@@ -28,25 +28,22 @@
                         <td>
                             ${message.specialty}
                         </td>
-                        <#if user.isRole("USER")>
-                            <td>
-                                <a class="btn btn-outline-primary btn-sm" href="/user/${user.id}/message${message.id}" role="button">Edit</a>
-                                <form action="/user/${user.id}/deletemessage" method="post" style="display: inline-block">
-                                    <input type="submit" value="Delete" class="btn btn-outline-primary btn-sm" />
-                                    <input type="hidden" name="messageId" value="${message.id}" />
-                                    <input type="hidden" value="${_csrf.token}" name="_csrf">
-                                    <!-- Добавить сортировки конспектов-->
-                                </form>
-                            </td><!-- Добавить переход на страницу конспекта-->
-                        </#if>
-                </tr>
+                        <td>
+                            <a class="btn btn-outline-primary btn-sm" href="/profile/${user.username}/message${message.id}" role="button">Edit</a>
+                            <form action="/profile/${user.username}/deletemessage" method="post" style="display: inline-block">
+                                <input type="submit" value="Delete" class="btn btn-outline-primary btn-sm" />
+                                <input type="hidden" name="messageId" value="${message.id}" />
+                                <input type="hidden" value="${_csrf.token}" name="_csrf"><!-- Добавить сортировки конспектов-->
+                            </form>
+                        </td><!-- Добавить переход на страницу конспекта-->
+                    </tr>
                 </#list>
             </tbody>
         </table>
         </div>
         <#if user.isRole("USER")>
             <div class="footer">
-                <a class="btn btn-primary" href="/user/${user.getId()}/addmessage" role="button">Create note</a>
+                <a class="btn btn-primary" href="/profile/${user.username}/addmessage" role="button">Create note</a>
             </div>
         </#if>
     </div>

@@ -11,7 +11,7 @@
         </div>
         <div class="card-footer d-flex bd-highlight">
             <div class="p-2 flex-grow-1 bd-highlight">
-                <a href="/user/profile/${message.author.username}">${message.author.username}</a>
+                <a href="/profile/${message.author.username}">${message.author.username}</a>
             </div>
             <div class="p-2 bd-highlight">
             </div>

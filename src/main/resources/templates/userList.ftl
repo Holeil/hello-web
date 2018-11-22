@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as common>
 
 <@common.page>
-    <form action="/user/changeUserList" method="post">
+    <form action="/updateuserlist" method="post">
         <div class="content">
             <h2>List of Users</h2>
             <table class="table">
@@ -15,7 +15,7 @@
                 <tbody>
                     <#list users as user>
                     <tr>
-                        <td><a href="/user/${user.id}">${user.getUsername()}</a></td>
+                        <td><a href="/profile/${user.username}">${user.getUsername()}</a></td>
                         <td>
                             <#list user.roles as role>
                                 ${role} <#sep>,

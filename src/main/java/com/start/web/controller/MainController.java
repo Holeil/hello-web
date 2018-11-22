@@ -1,10 +1,7 @@
 package com.start.web.controller;
 
-import com.start.web.domain.Message;
-import com.start.web.domain.User;
 import com.start.web.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,9 +18,4 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("/user/-1")
-    public String anonymUser() {
-
-        return "redirect:/";
-    }
 }
