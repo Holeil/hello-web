@@ -18,11 +18,10 @@
         </ul>
         <#if user??>
             <div class="navbar-text mr-3">
-                <a class="nav-link" href="/profile/${name}">${name}</span></a> <!-- <#if isAdmin>/user/${userId}</#if><#if !isAdmin>/user/profile</#if> Это я запихивал в href для разграничения путей Админа и юзера-->
-            </div><!-- name - это username пользователя, определён в security.ftl-->
+                <a class="nav-link" href="/profile/${name}">${name}</span></a>
+            </div>
             <@login.logout />
-        </#if>
-        <#if !user??>
+        <#else >
             <a href="/login"><button type="submit" class="btn btn-primary">
                 Login</button></span>
             </a>

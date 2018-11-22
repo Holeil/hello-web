@@ -2,8 +2,6 @@ package com.start.web.domain.util;
 
 import com.start.web.domain.Role;
 import com.start.web.domain.User;
-import com.start.web.repos.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 
 public abstract class UserHelper {
     public static User setUserAdmin(User user) {
@@ -30,5 +28,9 @@ public abstract class UserHelper {
         user.getRoles().add(Role.valueOf("USER"));
 
         return user;
+    }
+
+    public static boolean compareTwoUsers(User user1, User user2) {
+        return user1.getId().equals(user2.getId());
     }
 } 

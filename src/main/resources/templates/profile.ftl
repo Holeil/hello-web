@@ -14,38 +14,42 @@
                 <tr>
                     <th scope="col">Название</th>
                     <th scope="col">Номер специальности</th>
-                    <th scope="col">Действия</a></th>
+                    <#if access>
+                        <th scope="col">Действия</a></th>
+                    </#if>
                 </tr>
             </thead>
             <tbody>
                 <#list messages as message>
                     <tr>
                         <td>
-                            <a href="/message/${message.id}" style="text-decoration: none; color: black;">
+                            <a href="/message/${message.id}">
                                 ${message.title}
                             </a>
                         </td>
                         <td>
                             ${message.specialty}
                         </td>
+                        <#if access>
                         <td>
-                            <a class="btn btn-outline-primary btn-sm" href="/profile/${user.username}/message${message.id}" role="button">Edit</a>
+                            <a class="btn btn-outline-primary btn-sm" href="/profile/${user.username}/updatemessage${message.id}" role="button">Edit</a>
                             <form action="/profile/${user.username}/deletemessage" method="post" style="display: inline-block">
                                 <input type="submit" value="Delete" class="btn btn-outline-primary btn-sm" />
                                 <input type="hidden" name="messageId" value="${message.id}" />
                                 <input type="hidden" value="${_csrf.token}" name="_csrf"><!-- Добавить сортировки конспектов-->
                             </form>
-                        </td><!-- Добавить переход на страницу конспекта-->
+                        </td>
+                        </#if>
                     </tr>
                 </#list>
             </tbody>
         </table>
         </div>
-        <#if user.isRole("USER")>
-            <div class="footer">
-                <a class="btn btn-primary" href="/profile/${user.username}/addmessage" role="button">Create note</a>
-            </div>
+        <div class="footer">
+        <#if access>
+            <a class="btn btn-primary" href="/profile/${user.username}/addmessage" role="button">Create note</a>
         </#if>
+        </div>
     </div>
 </div>
 </@common.page>

@@ -27,9 +27,8 @@
     <#if isUser>
         <form action="/message/${message.id}/addcomment" method="post">
             <textarea class="form-control" name="text" placeholder="Your comments.."></textarea>
-            <input type="submit" class="btn btn-primary"/>
+            <input type="submit" value="Submit comment" class="btn btn-primary" />
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
         </form>
     </#if>
-
 </@common.page>

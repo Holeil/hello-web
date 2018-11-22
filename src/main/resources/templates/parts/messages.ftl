@@ -1,5 +1,5 @@
 <#macro messages path isUpdateMessageForm>
-    <form action="/profile/${user.username}/${path}" method="post" class="mt-5">
+    <form action="/profile/${user.username}/${path}<#if isUpdateMessageForm>${message.id}</#if>" method="post" class="mt-5">
         <h2>New note</h2>
         <div class="row mb-5">
             <div class="col">

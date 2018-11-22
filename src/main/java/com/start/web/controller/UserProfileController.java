@@ -2,6 +2,7 @@ package com.start.web.controller;
 
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
+import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,15 +27,26 @@ public class UserProfileController {
     }
 
     @GetMapping("/profile/{username}")
-    public String userProfilePage(@PathVariable String username,
+    public String userProfilePage(@AuthenticationPrincipal User authUser,
+                                  @PathVariable String username,
                                   Model model
     ) {
         User user = userRepo.findByUsername(username);
 
         Iterable<Message> messages = messageRepo.findByAuthor(user);
 
+        boolean access;
+
+        if(!authUser.isRole("ADMIN") && (authUser.isRole("BLOCKED") || !UserHelper.compareTwoUsers(authUser, user))) {
+            access = false;
+        }
+        else {
+            access = true;
+        }
+
         model.addAttribute("user", user);
         model.addAttribute("messages", messages);
+        model.addAttribute("access", access);
 
         return "profile";
     }

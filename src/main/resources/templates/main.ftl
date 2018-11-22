@@ -3,7 +3,7 @@
 <@common.page>
     <#list messages as message>
     <div class="card center-block mb-5">
-        <a href="/message/${message.id}" class="card-header" style="text-decoration: none; color: black;">
+        <a href="/message/${message.id}" class="card-header">
             <h5>${message.title}</h5><h6>${message.specialty}</h6>
         </a>
         <div class="card-body">

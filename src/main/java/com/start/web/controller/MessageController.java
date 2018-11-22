@@ -2,10 +2,12 @@ package com.start.web.controller;
 
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
+import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,9 +36,14 @@ public class MessageController {
     }
 
     @GetMapping("/profile/{username}/addmessage")
-    public String createMessagePage(@PathVariable String username,
+    public String createMessagePage(@AuthenticationPrincipal User authUser,
+                                    @PathVariable String username,
                                     Model model) {
         User user = userRepo.findByUsername(username);
+
+        if(!(authUser.isRole("ADMIN") || UserHelper.compareTwoUsers(authUser, user)) || authUser.isRole("BLOCKED")) {
+            return "redirect:/profile/" + username;
+        }
 
         model.addAttribute("user", user);
 
@@ -61,8 +68,15 @@ public class MessageController {
     }
 
     @PostMapping("/profile/{username}/deletemessage")
-    public String deleteMessage(@PathVariable String username,
+    public String deleteMessage(@AuthenticationPrincipal User authUser,
+                                @PathVariable String username,
                                 @RequestParam("messageId") Message message) {
+        User user = userRepo.findByUsername(username);
+
+        if(!(authUser.isRole("ADMIN") || UserHelper.compareTwoUsers(authUser, user)) || authUser.isRole("BLOCKED")) {
+            return "redirect:/profile/" + username;
+        }
+
         commentRepo.deleteAll(commentRepo.findByMessage(message));
 
         messageRepo.delete(message);
@@ -70,11 +84,16 @@ public class MessageController {
         return "redirect:/profile/" + username;
     }
 
-    @GetMapping("/profile/{username}/message{message}")
-    public String updateMessagePage(@PathVariable String username,
+    @GetMapping("/profile/{username}/updatemessage{message}")
+    public String updateMessagePage(@AuthenticationPrincipal User authUser,
+                                    @PathVariable String username,
                                     @PathVariable Message message,
                                     Model model) {
         User user = userRepo.findByUsername(username);
+
+        if(!(authUser.isRole("ADMIN") || UserHelper.compareTwoUsers(authUser, user)) || authUser.isRole("BLOCKED")) {
+            return "redirect:/profile/" + username;
+        }
 
         model.addAttribute("message", message);
         model.addAttribute("user", user);
@@ -82,9 +101,9 @@ public class MessageController {
         return "updatemessage";
     }
 
-    @PostMapping("/profile/{username}/updatemessage")
+    @PostMapping("/profile/{username}/updatemessage{message}")
     public String updateMessage(@PathVariable String username,
-                                @RequestParam("messageId") Message message,
+                                @PathVariable Message message,
                                 @RequestParam String title,
                                 @RequestParam String specialty,
                                 @RequestParam String text,

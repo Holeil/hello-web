@@ -8,12 +8,10 @@
         name = user.getUsername()
         isUser =  user.isRole("USER")
         isAdmin = user.isRole("ADMIN")
-        userId = user.id
     >
 <#else>
     <#assign
         name = "unknown"
-        userId = -1
         isUser = false
         isAdmin = false
     >
