@@ -1,6 +1,10 @@
 package com.start.web.domain;
 
+import com.start.web.domain.util.MessageHelper;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "message")
@@ -18,6 +22,14 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
+    @ManyToMany
+    @JoinTable(
+            name = "message_likes",
+            joinColumns = {@JoinColumn(name = "message_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private Set<User> likes = new HashSet<>();
+
     public Message() {
     }
 
@@ -30,7 +42,7 @@ public class Message {
     }
 
     public String getAuthorName() {
-        return author != null ? author.getUsername() : "<none>";
+        return MessageHelper.getAuthorName(author);
     }
 
     public User getAuthor() {
@@ -79,5 +91,13 @@ public class Message {
 
     public void setSpecialty(String specialty) {
         this.specialty = specialty;
+    }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
     }
 }

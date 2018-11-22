@@ -67,8 +67,8 @@ public class MessageController {
 
     @GetMapping("/user/{user}/message{message}")
     public String updateMessagePage(@PathVariable User user,
-                                @PathVariable Message message,
-                                Model model) {
+                                    @PathVariable Message message,
+                                    Model model) {
         model.addAttribute("message", message);
         model.addAttribute("user", user);
 
