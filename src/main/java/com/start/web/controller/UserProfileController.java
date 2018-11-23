@@ -6,6 +6,10 @@ import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +33,12 @@ public class UserProfileController {
     @GetMapping("/profile/{username}")
     public String userProfilePage(@AuthenticationPrincipal User authUser,
                                   @PathVariable String username,
-                                  Model model
+                                  Model model,
+                                  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         User user = userRepo.findByUsername(username);
 
-        Iterable<Message> messages = messageRepo.findByAuthor(user);
+        Page<Message> page = messageRepo.findByAuthor(user, pageable);
 
         boolean access;
 
@@ -43,9 +48,10 @@ public class UserProfileController {
         else {
             access = true;
         }
-
+        
         model.addAttribute("user", user);
-        model.addAttribute("messages", messages);
+        model.addAttribute("url", "/profile/" + username);
+        model.addAttribute("page", page);
         model.addAttribute("access", access);
 
         return "profile";

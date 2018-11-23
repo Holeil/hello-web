@@ -1,7 +1,9 @@
 <#import "parts/common.ftl" as common>
+<#import "parts/pager.ftl" as p>
 
 <@common.page>
-    <#list messages as message>
+    <@p.pager url page />
+    <#list page.content as message>
     <div class="card center-block mb-5">
         <a href="/message/${message.id}" class="card-header">
             <h5>${message.title}</h5><h6>${message.specialty}</h6>
@@ -14,8 +16,16 @@
                 <a href="/profile/${message.author.username}">${message.author.username}</a>
             </div>
             <div class="p-2 bd-highlight">
+                <a href="/message/${message.id}/likes">
+                    <#if message??>
+                        <i class="far fa-heart"></i>
+                    <#else>
+                        <i class="fas fa-heart"></i>
+                    </#if>
+                </a>
             </div>
         </div>
     </div>
     </#list>
+    <@p.pager url page />
 </@common.page>

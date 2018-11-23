@@ -1,4 +1,5 @@
 <#import "parts/common.ftl" as common>
+<#import "parts/pager.ftl" as p>
 
 <@common.page>
 <h2 class="mb-4">User: ${user.getUsername()}</h2>
@@ -20,7 +21,8 @@
                 </tr>
             </thead>
             <tbody>
-                <#list messages as message>
+            <@p.pager url page />
+                <#list page.content as message>
                     <tr>
                         <td>
                             <a href="/message/${message.id}">
