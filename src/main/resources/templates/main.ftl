@@ -15,15 +15,6 @@
             <div class="p-2 flex-grow-1 bd-highlight">
                 <a href="/profile/${message.author.username}">${message.author.username}</a>
             </div>
-            <div class="p-2 bd-highlight">
-                <a href="/message/${message.id}/likes">
-                    <#if message??>
-                        <i class="far fa-heart"></i>
-                    <#else>
-                        <i class="fas fa-heart"></i>
-                    </#if>
-                </a>
-            </div>
         </div>
     </div>
     </#list>

@@ -2,11 +2,15 @@ package com.start.web.controller;
 
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
+import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class MessageController {
@@ -28,9 +34,10 @@ public class MessageController {
 
     @GetMapping("/message/{message}")
     public String messagePage(@PathVariable Message message,
-                              Model model) {
+                              Model model,
+                              @AuthenticationPrincipal User user) {
         model.addAttribute("message", message);
-        model.addAttribute("comments", commentRepo.findByMessage(message));
+        model.addAttribute("comments", commentRepo.findByMessage(message, user));
 
         return "message";
     }
@@ -73,11 +80,15 @@ public class MessageController {
                                 @RequestParam("messageId") Message message) {
         User user = userRepo.findByUsername(username);
 
+        List<CommentDto> comments = commentRepo.findByMessage(message, authUser);
+
         if(!(authUser.isRole("ADMIN") || UserHelper.compareTwoUsers(authUser, user)) || authUser.isRole("BLOCKED")) {
             return "redirect:/profile/" + username;
         }
 
-        commentRepo.deleteAll(commentRepo.findByMessage(message));
+        for(CommentDto comment : comments) {
+            commentRepo.deleteById(comment.getId());
+        }
 
         messageRepo.delete(message);
 

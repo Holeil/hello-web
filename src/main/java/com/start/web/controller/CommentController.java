@@ -34,19 +34,13 @@ public class CommentController {
         return "redirect:/message/" + message.getId();
     }
 
-    @GetMapping("/message/{message}/likes")
+    @GetMapping("/message/{message}/likes{comment}")
     public String like(@AuthenticationPrincipal User user,
                        @PathVariable Message message,
+                       @PathVariable Comment comment,
                        RedirectAttributes redirectAttributes,
                        @RequestHeader(required = false) String referer) {
-        Set<User> likes = message.getLikes();
-
-        if(likes.contains(user)) {
-            likes.remove(user);
-        }
-        else {
-            likes.add(user);
-        }
+        Set<User> likes = comment.getLikes();
 
         UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
 
@@ -54,6 +48,17 @@ public class CommentController {
                 .entrySet()
                 .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
 
+        for(User liker : likes) {
+            if(liker.getId().equals(user.getId())) {
+                likes.remove(liker);
+                return "redirect:" + components.getPath();
+            }
+        }
+
+        likes.add(user);
+
         return "redirect:" + components.getPath();
+
+
     }
 } 

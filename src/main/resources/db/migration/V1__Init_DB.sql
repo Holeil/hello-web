@@ -25,6 +25,23 @@ create table usr (
     primary key (id)
 );
 
+create table comment (
+  id int8 not null,
+  text varchar (255),
+  date varchar (255),
+  user_id int8,
+  message_id int8,
+  primary key (id)
+);
+
+alter table if exists comment
+    add constraint comment_message_fk
+    foreign key (message_id) references message;
+
+alter table if exists comment
+    add constraint comment_user_fk
+    foreign key (user_id) references usr;
+
 alter table if exists message
     add constraint message_user_fk
     foreign key (user_id) references usr;

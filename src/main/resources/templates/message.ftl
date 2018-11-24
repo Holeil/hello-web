@@ -18,8 +18,20 @@
                 <div class="card-body">
                     ${comment.text}
                 </div>
-                <div class="card-footer">
-                    ${comment.date}
+                <div class="card-footer d-flex bd-highlight">
+                    <div class="p-2 flex-grow-1 bd-highlight">
+                        ${comment.date}
+                    </div>
+                    <div class="p-2 bd-highlight">
+                        <a href="/message/${message.id}/likes${comment.id}">
+                        <#if comment.meLiked>
+                            <i class="fas fa-heart"></i>
+                        <#else>
+                        <i class="far fa-heart"></i>
+                        </#if>
+                            ${comment.likes}
+                        </a>
+                    </div>
                 </div>
             </div>
         </#list>

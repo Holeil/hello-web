@@ -1,6 +1,6 @@
 package com.start.web.domain;
 
-import com.start.web.domain.util.MessageHelper;
+import com.start.web.domain.util.CommentHelper;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -39,10 +39,6 @@ public class Message {
         this.title = title;
         this.text = text;
         this.tag = tag;
-    }
-
-    public String getAuthorName() {
-        return MessageHelper.getAuthorName(author);
     }
 
     public User getAuthor() {

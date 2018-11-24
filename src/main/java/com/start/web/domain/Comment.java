@@ -1,6 +1,11 @@
 package com.start.web.domain;
 
+import com.start.web.domain.dto.CommentDto;
+import com.start.web.domain.util.CommentHelper;
+
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Comment {
@@ -18,6 +23,14 @@ public class Comment {
     @JoinColumn(name = "message_id")
     private Message message;
 
+    @ManyToMany
+    @JoinTable(
+            name = "comment_likes",
+            joinColumns = {@JoinColumn(name = "comment_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private Set<User> likes = new HashSet<>();
+
     public Comment() {
 
     }
@@ -27,6 +40,10 @@ public class Comment {
         this.date = date;
         this.author = author;
         this.message = message;
+    }
+
+    public String getAuthorName() {
+        return CommentHelper.getAuthorName(author);
     }
 
     public Long getId() {
@@ -67,5 +84,13 @@ public class Comment {
 
     public void setMessage(Message message) {
         this.message = message;
+    }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
     }
 }
