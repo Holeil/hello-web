@@ -7,10 +7,8 @@ import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
+import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +34,8 @@ public class MessageController {
     public String messagePage(@PathVariable Message message,
                               Model model,
                               @AuthenticationPrincipal User user) {
+
+        model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("message", message);
         model.addAttribute("comments", commentRepo.findByMessage(message, user));
 

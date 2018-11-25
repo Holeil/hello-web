@@ -1,19 +1,13 @@
 package com.start.web.controller;
 
 import com.start.web.domain.Comment;
-import com.start.web.domain.Message;
 import com.start.web.domain.User;
-import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import com.start.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;

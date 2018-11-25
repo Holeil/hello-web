@@ -9,7 +9,7 @@
             <h5>${message.title}</h5><h6>${message.specialty}</h6>
         </a>
         <div class="card-body">
-            <p class="card-text">${message.text}</p>
+            <p class="card-text">${converter.markdownToHtml(message.text)}</p>
         </div>
         <div class="card-footer d-flex bd-highlight">
             <div class="p-2 flex-grow-1 bd-highlight">

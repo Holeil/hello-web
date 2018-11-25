@@ -2,6 +2,7 @@ package com.start.web.controller;
 
 import com.start.web.domain.Message;
 import com.start.web.repos.MessageRepo;
+import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +23,7 @@ public class MainController {
                            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Message> page = messageRepo.findAll(pageable);
 
+        model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("page", page);
         model.addAttribute("url", "/");
 
