@@ -19,7 +19,8 @@ public interface CommentRepo extends CrudRepository<Comment, Long> {
             ") " +
             "from Comment m left join m.likes ml " +
             "where m.message = :message " +
-            "group by m")
+            "group by m " +
+            "order by m.id asc")
     List<CommentDto> findByMessage(@Param("message") Message message, @Param("user") User user);
 
     List<Comment> findByAuthor(User user);

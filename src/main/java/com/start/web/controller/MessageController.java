@@ -2,6 +2,7 @@ package com.start.web.controller;
 
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
+import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
@@ -9,6 +10,7 @@ import com.start.web.repos.UserRepo;
 import com.start.web.service.MessageService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 public class MessageController {
@@ -36,9 +40,13 @@ public class MessageController {
                               Model model,
                               @AuthenticationPrincipal User user) {
 
+        List<CommentDto> comments = commentRepo.findByMessage(message, user);
+
+
+
         model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("message", message);
-        model.addAttribute("comments", commentRepo.findByMessage(message, user));
+        model.addAttribute("comments", comments);
 
         return "message";
     }

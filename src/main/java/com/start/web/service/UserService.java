@@ -2,7 +2,6 @@ package com.start.web.service;
 
 import com.start.web.domain.Role;
 import com.start.web.domain.User;
-import com.start.web.repos.CommentRepo;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -25,9 +23,6 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private MailSender mailSender;
-    @Autowired
-
-    private CommentRepo commentRepo;
 
     @Autowired
     private CommentService commentService;

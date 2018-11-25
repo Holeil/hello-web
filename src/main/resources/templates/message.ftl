@@ -13,7 +13,7 @@
         <#list comments as comment>
             <div class="card">
                 <div class="card-header">
-                    ${comment.author.username}
+                    ${comment.id}${comment.author.username}
                 </div>
                 <div class="card-body">
                     ${comment.text}
