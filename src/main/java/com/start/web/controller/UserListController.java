@@ -1,10 +1,6 @@
 package com.start.web.controller;
 
-import com.start.web.domain.Comment;
 import com.start.web.domain.User;
-import com.start.web.domain.util.UserHelper;
-import com.start.web.repos.CommentRepo;
-import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import com.start.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +22,7 @@ public class UserListController {
     private UserRepo userRepo;
 
     @Autowired
-    private MessageRepo messageRepo;
-
-    @Autowired
     private UserService userService;
-
-    @Autowired
-    private CommentRepo commentRepo;
 
     @GetMapping("/user")
     public String userList(@AuthenticationPrincipal User user,
@@ -56,10 +46,11 @@ public class UserListController {
 
         if(form.keySet().contains("set-admin")) {
             for(String key : form.keySet()){
+
                 if(users.contains(userRepo.findByUsername(key))) {
                     User user = userRepo.findByUsername(key);
 
-                    userRepo.save(UserHelper.setUserAdmin(user));
+                    userService.setUserAdmin(user);
                 }
             }
         }
@@ -72,18 +63,7 @@ public class UserListController {
                         exit = true;
                     }
 
-                    commentRepo.deleteAll(commentRepo.findByAuthor(user));
-
-                    Iterable<Comment> comments = commentRepo.findAll();
-
-                    for(Comment comment : comments) {
-                        comment.getLikes().remove(user);
-
-                    }
-
-                    messageRepo.deleteAll(messageRepo.findByAuthor(user, null));
-
-                    userRepo.delete(user);
+                    userService.deleteUser(user);
                 }
             }
         }
@@ -97,17 +77,18 @@ public class UserListController {
                         exit = true;
                     }
 
-                    userRepo.save(UserHelper.setUserBlock(user));
+                    userService.setUserBlock(user);
                 }
 
             }
         }
         else if(form.keySet().contains("unblock-users")) {
             for(String key : form.keySet()){
+
                 if(users.contains(userRepo.findByUsername(key))) {
                     User user = userRepo.findByUsername(key);
 
-                    userRepo.save(UserHelper.setUserUnblock(user));
+                    userService.setUserUnblock(user);
                 }
             }
         }

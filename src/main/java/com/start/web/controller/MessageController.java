@@ -2,11 +2,11 @@ package com.start.web.controller;
 
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
-import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
+import com.start.web.service.MessageService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,8 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 @Controller
 public class MessageController {
@@ -29,6 +27,9 @@ public class MessageController {
 
     @Autowired
     private CommentRepo commentRepo;
+
+    @Autowired
+    private MessageService messageService;
 
     @GetMapping("/message/{message}")
     public String messagePage(@PathVariable Message message,
@@ -80,17 +81,11 @@ public class MessageController {
                                 @RequestParam("messageId") Message message) {
         User user = userRepo.findByUsername(username);
 
-        List<CommentDto> comments = commentRepo.findByMessage(message, authUser);
-
         if(!(authUser.isRole("ADMIN") || UserHelper.compareTwoUsers(authUser, user)) || authUser.isRole("BLOCKED")) {
             return "redirect:/profile/" + username;
         }
 
-        for(CommentDto comment : comments) {
-            commentRepo.deleteById(comment.getId());
-        }
-
-        messageRepo.delete(message);
+        messageService.deleteMessage(message);
 
         return "redirect:/profile/" + username;
     }

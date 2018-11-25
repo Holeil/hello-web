@@ -2,6 +2,7 @@ package com.start.web.service;
 
 import com.start.web.domain.Role;
 import com.start.web.domain.User;
+import com.start.web.repos.CommentRepo;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,10 +21,19 @@ public class UserService implements UserDetailsService {
     private UserRepo userRepo;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private MailSender mailSender;
+    @Autowired
+
+    private CommentRepo commentRepo;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private MessageService messageService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -88,46 +98,39 @@ public class UserService implements UserDetailsService {
         return userRepo.findAll();
     }
 
-    public void saveUser(User user, String username, Map<String, String> form) {
-        user.setUsername(username);
+    public void deleteUser(User user) {
+        commentService.deleteUserComment(user);
 
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
+        commentService.removeUserLikes(user);
 
+        messageService.deleteMessageByAuthor(user);
+
+        userRepo.delete(user);
+    }
+
+    public void setUserAdmin(User user) {
         user.getRoles().clear();
-
-        for (String key : form.keySet()) {
-            if (roles.contains(key)) {
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
+        user.getRoles().add(Role.valueOf("USER"));
+        user.getRoles().add(Role.valueOf("ADMIN"));
 
         userRepo.save(user);
     }
 
-    public void updateProfile(User user, String password, String email) {
-        String userEmail = user.getEmail();
-
-        boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
-                (userEmail != null && !userEmail.equals(email));
-
-        if (isEmailChanged) {
-            user.setEmail(email);
-
-            if (!StringUtils.isEmpty(email)) {
-                user.setActivationCode(UUID.randomUUID().toString());
-            }
-        }
-
-        if (!StringUtils.isEmpty(password)) {
-            user.setPassword(password);
-        }
+    public void setUserBlock(User user) {
+        user.getRoles().clear();
+        user.getRoles().add(Role.BLOCKED);
 
         userRepo.save(user);
+    }
 
-        if (isEmailChanged) {
-            sendMessage(user);
+    public void setUserUnblock(User user) {
+        if(user.isRole("ADMIN")) {
+            userRepo.save(user);
         }
+
+        user.getRoles().clear();
+        user.getRoles().add(Role.valueOf("USER"));
+
+        userRepo.save(user);
     }
 }
