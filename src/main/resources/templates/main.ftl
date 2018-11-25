@@ -15,6 +15,14 @@
             <div class="p-2 flex-grow-1 bd-highlight">
                 <a href="/profile/${message.author.username}">${message.author.username}</a>
             </div>
+            <div class="p-2 bd-highlight">
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                0
+            </div>
         </div>
     </div>
     </#list>

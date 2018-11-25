@@ -11,7 +11,7 @@
         </div>
         <div class="row mb-5">
             <div class="col">
-                <textarea class="form-control" name="text" placeholder="Text"><#if isUpdateMessageForm>${message.text}</#if></textarea>
+                <textarea class="form-control" name="text" placeholder="Text" style="resize: none; min-height: 300px"><#if isUpdateMessageForm>${message.text}</#if></textarea>
             </div>
         </div>
         <div class="row mb-5">

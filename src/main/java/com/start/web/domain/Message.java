@@ -1,16 +1,12 @@
 package com.start.web.domain;
 
-import com.start.web.domain.util.CommentHelper;
-
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "message")
 public class Message {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO) // айдишники общие на все таблицы, поэтому уберу отображение id на странице
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
     private String title;
@@ -21,14 +17,6 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
-
-    @ManyToMany
-    @JoinTable(
-            name = "message_likes",
-            joinColumns = {@JoinColumn(name = "message_id")},
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-    )
-    private Set<User> likes = new HashSet<>();
 
     public Message() {
     }
@@ -89,11 +77,4 @@ public class Message {
         this.specialty = specialty;
     }
 
-    public Set<User> getLikes() {
-        return likes;
-    }
-
-    public void setLikes(Set<User> likes) {
-        this.likes = likes;
-    }
 }
