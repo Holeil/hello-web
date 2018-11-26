@@ -52,6 +52,8 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.BLOCKED));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()) );
+        user.setLang("ru");
+        user.setSiteDesign("HUMANITARIAN");
 
         userRepo.save(user);
 
@@ -128,4 +130,5 @@ public class UserService implements UserDetailsService {
 
         userRepo.save(user);
     }
+
 }

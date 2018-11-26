@@ -23,6 +23,8 @@ create table usr (
     email varchar(255),
     password varchar(255) not null,
     username varchar(255) not null,
+    lang varchar (255),
+    site_design varchar (255),
     primary key (id)
 );
 

@@ -42,7 +42,7 @@ public class MessageController {
         List<CommentDto> comments = commentRepo.findByMessage(message, user);
 
 
-
+        model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
         model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("message", message);
         model.addAttribute("comments", comments);
@@ -60,6 +60,7 @@ public class MessageController {
             return "redirect:/profile/" + username;
         }
 
+        model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
         model.addAttribute("user", user);
 
         return "addmessage";
@@ -108,6 +109,7 @@ public class MessageController {
             return "redirect:/profile/" + username;
         }
 
+        model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
         model.addAttribute("message", message);
         model.addAttribute("user", user);
 

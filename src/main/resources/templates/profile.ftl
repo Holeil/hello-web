@@ -2,11 +2,11 @@
 <#import "parts/pager.ftl" as p>
 
 <@common.page>
-<h2 class="mb-4">User: ${user.getUsername()}</h2>
+<h2 class="mb-4">Пользователь: ${user.getUsername()}</h2>
 <div class="user-profile">
     <div class="user-information">
-        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> none</#if></span></div><!--Добавить отображение того, что юзер подтвердил свой мэил, или нет-->
-        <div><h5>Information about user:</h5><span>Other information..................</span></div><!--Добавить возможность редактировать свой профиль-->
+        <div><h5>Email:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else> нету</#if></span></div><!--Добавить отображение того, что юзер подтвердил свой мэил, или нет-->
+        <div><h5>Информация про пользователя:</h5><span>Информация пользователя</span></div><!--Добавить возможность редактировать свой профиль-->
     </div>
     <div class="user-notes wrapper">
         <div class="content">
@@ -49,7 +49,7 @@
         </div>
         <div class="footer">
         <#if access>
-            <a class="btn btn-primary" href="/profile/${user.username}/addmessage" role="button">Create note</a>
+            <a class="btn btn-primary" href="/profile/${user.username}/addmessage" role="button">Создать конспект</a>
         </#if>
         </div>
     </div>

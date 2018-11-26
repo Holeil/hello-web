@@ -36,7 +36,6 @@ public class CommentController {
 
     @GetMapping("/message/{message}/likes{comment}")
     public String like(@AuthenticationPrincipal User user,
-                       @PathVariable Message message,
                        @PathVariable Comment comment,
                        RedirectAttributes redirectAttributes,
                        @RequestHeader(required = false) String referer) {

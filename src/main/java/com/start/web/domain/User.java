@@ -20,6 +20,8 @@ public class User implements UserDetails {
     @NotBlank(message = "Password cannot be empty")
     private String password;
     private boolean active;
+    private String siteDesign;
+    private String lang;
 
     @Email(message = "Email is not correct")
     @NotBlank(message = "Email cannot be empty")
@@ -118,5 +120,21 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public String getSiteDesign() {
+        return siteDesign;
+    }
+
+    public void setSiteDesign(String siteDesign) {
+        this.siteDesign = siteDesign;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 }

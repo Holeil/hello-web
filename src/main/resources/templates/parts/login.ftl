@@ -55,14 +55,14 @@
         </div>
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <#if !isRegisterForm><a href="/registration">Add new user</a></#if>
-    <button class="btn btn-primary" type="submit"><#if isRegisterForm>Create<#else>Sign In</#if></button>
+    <#if !isRegisterForm><a href="/registration">Зарегистрироваться</a></#if>
+    <button class="btn btn-primary" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
 </form>
 </#macro>
 
 <#macro logout>
 <form action="/logout" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <button class="btn btn-primary" type="submit">Sign Out</button>
+    <button class="btn <#if siteTheme??>${siteTheme.navbarButton}<#else>btn-primary</#if>" type="submit">Выйти</button>
 </form>
 </#macro>

@@ -1,6 +1,7 @@
 package com.start.web.controller;
 
 import com.start.web.domain.User;
+import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.UserRepo;
 import com.start.web.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class UserListController {
     public String userList(@AuthenticationPrincipal User user,
                            Model model) {
         if(user.isRole("ADMIN")) {
+            model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
             model.addAttribute("users", userService.findAll());
 
             return "userList";
