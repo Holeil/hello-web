@@ -22,3 +22,7 @@
 .inline-block {
     display: inline;
 }
+
+a:hover {
+    text-decoration: none;
+}

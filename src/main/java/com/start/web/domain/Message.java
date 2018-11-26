@@ -1,6 +1,8 @@
 package com.start.web.domain;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 @Entity
 @Table(name = "message")
@@ -13,6 +15,7 @@ public class Message {
     private String specialty;
     private String text;
     private String tag;
+    private String date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -27,6 +30,7 @@ public class Message {
         this.title = title;
         this.text = text;
         this.tag = tag;
+        this.setDate();
     }
 
     public User getAuthor() {
@@ -77,4 +81,11 @@ public class Message {
         this.specialty = specialty;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate() {
+        this.date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+    }
 }

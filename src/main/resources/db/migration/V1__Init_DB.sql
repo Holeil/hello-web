@@ -5,6 +5,7 @@ create table message (
     title varchar (255) not null,
     specialty varchar(255) not null,
     text varchar(2048) not null,
+    date varchar (255) not null,
     tag varchar(255),
     user_id int8,
     primary key (id)

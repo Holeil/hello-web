@@ -17,7 +17,7 @@
 </head>
 <body>
 <#include "navbar.ftl">
-<div class="container mt-5">
+<div class="container mt-5 p-3 mb-5">
 <#nested>
 </div>
 <#include "footer.ftl">

@@ -10,7 +10,6 @@ import com.start.web.repos.UserRepo;
 import com.start.web.service.MessageService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -127,6 +126,7 @@ public class MessageController {
             message.setSpecialty(specialty);
             message.setText(text);
             message.setTag(tag);
+            message.setDate();
 
             messageRepo.save(message);
         }
