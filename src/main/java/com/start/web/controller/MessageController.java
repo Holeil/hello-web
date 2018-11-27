@@ -41,7 +41,7 @@ public class MessageController {
 
         List<CommentDto> comments = commentRepo.findByMessage(message, user);
 
-
+        model.addAttribute("language", UserHelper.getLangUser(user));
         model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
         model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("message", message);
@@ -60,6 +60,7 @@ public class MessageController {
             return "redirect:/profile/" + username;
         }
 
+        model.addAttribute("language", UserHelper.getLangUser(authUser));
         model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
         model.addAttribute("user", user);
 
@@ -109,6 +110,7 @@ public class MessageController {
             return "redirect:/profile/" + username;
         }
 
+        model.addAttribute("language", UserHelper.getLangUser(authUser));
         model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
         model.addAttribute("message", message);
         model.addAttribute("user", user);

@@ -1,11 +1,11 @@
 <#macro login path isRegisterForm>
 <form action="${path}" method="post">
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">User Name :</label>
+        <label class="col-sm-2 col-form-label">Имя пользователя:</label>
         <div class="col-sm-6">
             <input type="text" name="username" value="<#if user??>${user.username}</#if>"
                    class="form-control ${(usernameError??)?string('is-invalid', '')}"
-                   placeholder="User name" />
+                   placeholder="Username" />
             <#if usernameError??>
                 <div class="invalid-feedback">
                     ${usernameError}
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Password:</label>
+        <label class="col-sm-2 col-form-label">Пароль:</label>
         <div class="col-sm-6">
             <input type="password" name="password"
                    class="form-control ${(passwordError??)?string('is-invalid', '')}"
@@ -28,7 +28,7 @@
     </div>
     <#if isRegisterForm>
         <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Password:</label>
+            <label class="col-sm-2 col-form-label">Повторите пароль:</label>
             <div class="col-sm-6">
                 <input type="password" name="password2"
                        class="form-control ${(password2Error??)?string('is-invalid', '')}"
@@ -55,14 +55,16 @@
         </div>
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <#if !isRegisterForm><a href="/registration">Зарегистрироваться</a></#if>
-    <button class="btn btn-primary" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
+    <div class="d-flex bd-highlight col-sm-8">
+        <#if !isRegisterForm><a href="/registration" class="flex-grow-1 bd-highlight mr-2">Регистрация нового пользователя</a></#if>
+        <button class="btn btn-primary p-2 bd-highlight" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
+    </div>
 </form>
 </#macro>
 
 <#macro logout>
 <form action="/logout" method="post">
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <button class="btn <#if siteTheme??>${siteTheme.navbarButton}<#else>btn-primary</#if>" type="submit">Выйти</button>
+    <button class="btn <#if siteTheme??>${siteTheme.navbarButton}<#else>btn-primary</#if>" type="submit"><#if language??>${language.logout}<#else>Выйти</#if></button>
 </form>
 </#macro>

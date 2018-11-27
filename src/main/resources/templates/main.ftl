@@ -13,8 +13,9 @@
         </div>
         <div class="card-footer d-flex bd-highlight ${siteTheme.cardFooter}">
             <div class="p-2 flex-grow-1 bd-highlight">
+                <span class="mr-1">${language.author}: </span>
                 <a href="/profile/${message.author.username}">${message.author.username}</a>
-                <span class="ml-2">${message.date}</span>
+                <span class="ml-3">${message.date}</span>
             </div>
             <div class="p-2 bd-highlight">
                 <i class="far fa-star"></i>

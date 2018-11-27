@@ -23,11 +23,11 @@ public class RegistrationController {
     private UserService userService;
 
     @GetMapping("/registration")
-    public String registration(@AuthenticationPrincipal User user,
-                               Model model) {
-        model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
-
-        return "registration";
+    public String registration(@AuthenticationPrincipal User user) {
+        if(user != null)
+            return "redirect:/";
+        else
+            return "registration";
     }
 
     @PostMapping("/registration")
@@ -62,8 +62,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/activate/{code}")
-    public String activate(@AuthenticationPrincipal User user,
-                           @PathVariable String code,
+    public String activate(@PathVariable String code,
                            Model model) {
         boolean isActivated = userService.activateUser(code);
 
@@ -74,8 +73,6 @@ public class RegistrationController {
             model.addAttribute("messageType", "danger");
             model.addAttribute("message", "Activation code is not found!");
         }
-
-        model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
 
         return "login";
     }

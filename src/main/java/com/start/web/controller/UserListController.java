@@ -29,6 +29,7 @@ public class UserListController {
     public String userList(@AuthenticationPrincipal User user,
                            Model model) {
         if(user.isRole("ADMIN")) {
+            model.addAttribute("language", UserHelper.getLangUser(user));
             model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
             model.addAttribute("users", userService.findAll());
 
@@ -61,7 +62,7 @@ public class UserListController {
                 if(users.contains(userRepo.findByUsername(key))) {
                     User user = userRepo.findByUsername(key);
 
-                    if(authUser.getId().equals(user.getId())) {
+                    if(authUser.getId().equals(user.getId()) && !user.getUsername().equals("admin")) {
                         exit = true;
                     }
 
@@ -75,7 +76,7 @@ public class UserListController {
                 if(users.contains(userRepo.findByUsername(key))) {
                     User user = userRepo.findByUsername(key);
 
-                    if(authUser.getId().equals(user.getId())) {
+                    if(authUser.getId().equals(user.getId()) && !user.getUsername().equals("admin")) {
                         exit = true;
                     }
 

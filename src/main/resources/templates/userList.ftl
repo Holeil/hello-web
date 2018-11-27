@@ -3,13 +3,13 @@
 <@common.page>
     <form action="/updateuserlist" method="post">
         <div class="content">
-            <h2>Список пользователей</h2>
+            <h2>${language.userList}</h2>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Username</th>
-                        <th scope="col">Роли</th>
-                        <th scope="col">Выбор пользователя</th>
+                        <th scope="col">${language.username}</th>
+                        <th scope="col">${language.roles}</th>
+                        <th scope="col">${language.chooseUser}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,11 +29,11 @@
         </div>
         <div class="footer">
             <div class="btn-group" role="group" aria-label="Basic example">
-                <input type="button" class="btn btn-secondary" name="choose-all-users" value="Выбрать всех" id="choose-all-users">
-                <input type="submit" class="btn btn-secondary" name="block-users" value="Заблокировать">
-                <input type="submit" class="btn btn-secondary" name="unblock-users" value="Разблокировать">
-                <input type="submit" class="btn btn-secondary" name="set-admin" value="Сделать админом">
-                <input type="submit" class="btn btn-secondary" name="delete-users" value="Удалить">
+                <input type="button" class="btn btn-secondary" name="choose-all-users" value="${language.chooseAll}" id="choose-all-users">
+                <input type="submit" class="btn btn-secondary" name="block-users" value="${language.blocked}">
+                <input type="submit" class="btn btn-secondary" name="unblock-users" value="${language.unblocked}">
+                <input type="submit" class="btn btn-secondary" name="set-admin" value="${language.setAdmin}">
+                <input type="submit" class="btn btn-secondary" name="delete-users" value="${language.delete}">
             </div>
         </div>
         <input type="hidden" value="${_csrf.token}" name="_csrf">

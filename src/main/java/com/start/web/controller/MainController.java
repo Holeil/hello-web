@@ -1,5 +1,6 @@
 package com.start.web.controller;
 
+import com.start.web.domain.Language;
 import com.start.web.domain.Message;
 import com.start.web.domain.User;
 import com.start.web.domain.util.UserHelper;
@@ -35,6 +36,7 @@ public class MainController {
                            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Message> page = messageRepo.findAll(pageable);
 
+        model.addAttribute("language", UserHelper.getLangUser(user));
         model.addAttribute("siteTheme", UserHelper.getThemeUser(user));
         model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("page", page);
@@ -59,6 +61,28 @@ public class MainController {
         }
         else {
             user.setSiteDesign("MATHEMATICS");
+        }
+
+        userRepo.save(user);
+
+        return "redirect:" + components.getPath();
+    }
+
+    @GetMapping("/changelanguage")
+    public String changeLanguage(RedirectAttributes redirectAttributes,
+                                 @RequestHeader(required = false) String referer,
+                                 @AuthenticationPrincipal User user) {
+        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
+
+        components.getQueryParams()
+                .entrySet()
+                .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
+
+        if(user.getLang().equals("RU")) {
+            user.setLang("BY");
+        }
+        else {
+            user.setLang("RU");
         }
 
         userRepo.save(user);

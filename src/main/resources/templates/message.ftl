@@ -41,8 +41,8 @@
     </div>
     <#if isUser>
         <form action="/message/${message.id}/addcomment" method="post">
-            <textarea class="form-control" name="text" placeholder="Your comments.."></textarea>
-            <input type="submit" value="Submit comment" class="btn btn-primary mt-1" />
+            <textarea class="form-control" name="text" placeholder="${language.youComment}"></textarea>
+            <input type="submit" value="${language.sendComment}" class="btn btn-primary mt-1" />
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
         </form>
     </#if>

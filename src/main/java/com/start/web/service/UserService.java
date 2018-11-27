@@ -52,7 +52,7 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.BLOCKED));
         user.setActivationCode(UUID.randomUUID().toString());
         user.setPassword(passwordEncoder.encode(user.getPassword()) );
-        user.setLang("ru");
+        user.setLang("RU");
         user.setSiteDesign("HUMANITARIAN");
 
         userRepo.save(user);
@@ -96,13 +96,15 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteUser(User user) {
-        commentService.deleteUserComment(user);
+        if(!user.getUsername().equals("admin")) {
+            commentService.deleteUserComment(user);
 
-        commentService.removeUserLikes(user);
+            commentService.removeUserLikes(user);
 
-        messageService.deleteMessageByAuthor(user);
+            messageService.deleteMessageByAuthor(user);
 
-        userRepo.delete(user);
+            userRepo.delete(user);
+        }
     }
 
     public void setUserAdmin(User user) {
@@ -114,21 +116,24 @@ public class UserService implements UserDetailsService {
     }
 
     public void setUserBlock(User user) {
-        user.getRoles().clear();
-        user.getRoles().add(Role.BLOCKED);
+        if(!user.getUsername().equals("admin")) {
+            user.getRoles().clear();
+            user.getRoles().add(Role.BLOCKED);
 
-        userRepo.save(user);
+            userRepo.save(user);
+        }
     }
 
     public void setUserUnblock(User user) {
         if(user.isRole("ADMIN")) {
             userRepo.save(user);
         }
+        else {
+            user.getRoles().clear();
+            user.getRoles().add(Role.valueOf("USER"));
 
-        user.getRoles().clear();
-        user.getRoles().add(Role.valueOf("USER"));
-
-        userRepo.save(user);
+            userRepo.save(user);
+        }
     }
 
 }

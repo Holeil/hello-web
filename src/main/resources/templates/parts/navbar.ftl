@@ -11,7 +11,9 @@
         <ul class="navbar-nav mr-auto">
         <#if isAdmin>
             <li class="nav-item">
-                <a class="nav-link" href="/user">Список пользователей</span></a>
+                <a class="nav-link" href="/user">
+                        <#if language??>${language.userList}<#else>Список пользователей</#if>
+                </a>
             </li>
         </#if>
         </ul>
@@ -20,12 +22,17 @@
                 <a class="nav-link" href="/profile/${name}">${name}</span></a>
             </div>
             <#if isUser>
-                <a href="/changetheme" class="btn <#if siteTheme??>${siteTheme.navbarButton}<#else>btn-primary</#if> mr-2">Переключить тему</a>
+                <a href="/changelanguage" class="btn <#if siteTheme??>${siteTheme.navbarButton}<#else>btn-primary</#if> mr-2">
+                <#if language??>${language.changeLang}<#else>Беларуски</#if>
+                </a>
+                <a href="/changetheme" class="btn <#if siteTheme??>${siteTheme.navbarButton}<#else>btn-primary</#if> mr-2">
+                    <#if language??>${language.changeTheme}<#else>Переключить тему</#if>
+                </a>
             </#if>
             <@login.logout />
         <#else >
             <a href="/login"><button type="submit" class="btn btn-primary">
-                Войти</button></span>
+                <#if language??>${language.login}<#else>Вход</#if></button></span>
             </a>
         </#if>
     </div>

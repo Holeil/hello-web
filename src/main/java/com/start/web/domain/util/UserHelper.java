@@ -1,5 +1,6 @@
 package com.start.web.domain.util;
 
+import com.start.web.domain.Language;
 import com.start.web.domain.Theme;
 import com.start.web.domain.User;
 
@@ -13,6 +14,13 @@ public abstract class UserHelper {
             return Theme.valueOf(user.getSiteDesign());
         else
             return Theme.valueOf("HUMANITARIAN");
+    }
+
+    public static Language getLangUser(User user) {
+        if(user != null)
+            return Language.valueOf(user.getLang());
+        else
+            return Language.valueOf("RU");
     }
 
 } 
