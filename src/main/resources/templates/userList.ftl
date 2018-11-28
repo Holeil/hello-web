@@ -5,7 +5,7 @@
         <div class="content">
             <h2>${language.userList}</h2>
             <table class="table">
-                <thead>
+                <thead class="bg-warning">
                     <tr>
                         <th scope="col">${language.username}</th>
                         <th scope="col">${language.roles}</th>

@@ -13,10 +13,10 @@ public enum Theme {
 
     HUMANITARIAN("navbar-dark bg-dark",
                  "btn-primary",
-                 "text-white bg-dark",
                  "bg-dark",
-                 "bg-dark",
-                 "bg-dark",
+                 "bg-warning text-black",
+                 "bg-dark text-white",
+                 "bg-dark text-white",
                  "border-primary",
                  "",
                  "text-white bg-dark");

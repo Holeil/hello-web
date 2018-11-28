@@ -5,7 +5,7 @@
     <@p.pager url page />
     <#list page.content as message>
     <div class="card ${siteTheme.card} center-block mb-5">
-        <a href="/message/${message.id}" class="card-header ${siteTheme.cardHeader}">
+        <a href="/message/${message.id}" class="card-header ${siteTheme.cardHeader}" style="color: black;">
             <h5>${message.title}</h5><h6>${message.specialty}</h6>
         </a>
         <div class="card-body ${siteTheme.cardBody}" style="overflow: hidden; text-overflow: ellipsis; height: 200px;">
