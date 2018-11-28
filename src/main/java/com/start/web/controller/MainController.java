@@ -33,7 +33,7 @@ public class MainController {
     @GetMapping("/")
     public String greeting(@AuthenticationPrincipal User user,
                            Model model,
-                           @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+                           @PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC) Pageable pageable) {
         Page<Message> page = messageRepo.findAll(pageable);
 
         model.addAttribute("language", UserHelper.getLangUser(user));

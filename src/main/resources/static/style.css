@@ -6,12 +6,12 @@
 
 .user-information {
     border-right: 1px solid rgba(152, 164, 183, 0.4);
-    width: 25%;
+    min-width: 350px;
     word-wrap: break-word;
 }
 
 .user-notes {
-    width: 75%;
+    width: 100%;
     padding-left: 6px;
 }
 

@@ -22,6 +22,7 @@ public class User implements UserDetails {
     private boolean active;
     private String siteDesign;
     private String lang;
+    private String info;
 
     @Email(message = "Email is not correct")
     @NotBlank(message = "Email cannot be empty")
@@ -136,5 +137,13 @@ public class User implements UserDetails {
 
     public void setLang(String lang) {
         this.lang = lang;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
     }
 }

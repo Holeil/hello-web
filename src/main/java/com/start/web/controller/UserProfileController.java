@@ -15,6 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserProfileController {
@@ -37,7 +39,7 @@ public class UserProfileController {
     public String userProfilePage(@AuthenticationPrincipal User authUser,
                                   @PathVariable String username,
                                   Model model,
-                                  @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+                                  @PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC) Pageable pageable
     ) {
         User user = userRepo.findByUsername(username);
 
@@ -60,5 +62,22 @@ public class UserProfileController {
         model.addAttribute("access", access);
 
         return "profile";
+    }
+
+    @PostMapping("/profile/{username}/changeuserinfo")
+    public String changeUserInfo(@RequestParam String userInfo,
+                                 @PathVariable String username) {
+        User user = userRepo.findByUsername(username);
+
+        userInfo = userInfo.replaceAll("\n|\r\n", "");
+
+        if(userInfo.equals(""))
+            userInfo = null;
+
+        user.setInfo(userInfo);
+
+        userRepo.save(user);
+
+        return "redirect:/profile/" + username;
     }
 } 
