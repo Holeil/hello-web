@@ -2,6 +2,7 @@
 <#import "parts/login.ftl" as login>
 
 <@common.page><!-- ДОДЕЛАТЬ И РАЗОБРАТЬСЯ! -->
+<div class="container">
 <div class="ml-1 mb-2"><h4>Вход</h4></div>
     <#if Session?? && Session.SPRING_SECURITY_LAST_EXCEPTION??>
         <div class="alert alert-danger" role="alert">
@@ -14,4 +15,5 @@
         </div>
     </#if>
     <@login.login "/login" false />
+</div>
 </@common.page>

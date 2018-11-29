@@ -1,7 +1,7 @@
 <#import "parts/common.ftl" as common>
 
 <@common.page>
-    <form action="/updateuserlist" method="post">
+    <form action="/updateuserlist" method="post" class="container">
         <div class="content">
             <h2>${language.userList}</h2>
             <table class="table">

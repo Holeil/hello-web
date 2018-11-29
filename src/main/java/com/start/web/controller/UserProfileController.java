@@ -5,11 +5,9 @@ import com.start.web.domain.User;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
+import com.start.web.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +24,9 @@ public class UserProfileController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private MessageService messageService;
+
     @GetMapping("/profile")
     public String profilePage(@AuthenticationPrincipal User user,
                               Model model) {
@@ -38,12 +39,12 @@ public class UserProfileController {
     @GetMapping("/profile/{username}")
     public String userProfilePage(@AuthenticationPrincipal User authUser,
                                   @PathVariable String username,
-                                  Model model,
-                                  @PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC) Pageable pageable
+                                  Model model
     ) {
         User user = userRepo.findByUsername(username);
 
-        Page<Message> page = messageRepo.findByAuthor(user, pageable);
+        Iterable<Message> messages = messageRepo.findByAuthor(user);
+
 
         boolean access;
 
@@ -57,8 +58,7 @@ public class UserProfileController {
         model.addAttribute("language", UserHelper.getLangUser(authUser));
         model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
         model.addAttribute("user", user);
-        model.addAttribute("url", "/profile/" + username);
-        model.addAttribute("page", page);
+        model.addAttribute("messages", messages);
         model.addAttribute("access", access);
 
         return "profile";
@@ -80,4 +80,5 @@ public class UserProfileController {
 
         return "redirect:/profile/" + username;
     }
+
 } 

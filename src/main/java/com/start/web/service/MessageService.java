@@ -4,7 +4,7 @@ import com.start.web.domain.Message;
 import com.start.web.domain.User;
 import com.start.web.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,7 +22,7 @@ public class MessageService {
     }
 
     public void deleteMessageByAuthor(User user) {
-        Page<Message> messages = messageRepo.findByAuthor(user, null);
+        Iterable<Message> messages = messageRepo.findByAuthor(user);
 
         for(Message message : messages) {
             commentService.deleteCommentsForMessage(message);

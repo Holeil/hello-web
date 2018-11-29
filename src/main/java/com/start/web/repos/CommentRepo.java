@@ -12,10 +12,10 @@ import java.util.List;
 
 public interface CommentRepo extends CrudRepository<Comment, Long> {
 
-    @Query("select new com.start.web.domain.dto.CommentDto(" +
-            "   m, " +
-            "   count(ml), " +
-            "   sum(case when ml = :user then 1 else 0 end) > 0" +
+    @Query("select new com.start.web.domain.dto.CommentDto( " +
+            "m, " +
+            "count(ml), " +
+            "sum(case when ml = :user then 1 else 0 end) > 0" +
             ") " +
             "from Comment m left join m.likes ml " +
             "where m.message = :message " +
