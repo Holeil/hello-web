@@ -26,7 +26,7 @@
                         ${comment.date}
                     </div>
                     <div class="p-2 bd-highlight ">
-                        <a href="/message/${message.id}/likes${comment.id}">
+                        <a href="<#if user?? && isUser>/message/${message.id}/likes${comment.id}</#if>">
                         <#if comment.meLiked>
                             <i class="fas fa-heart"></i>
                         <#else>
@@ -41,7 +41,7 @@
     </div>
     <#if isUser>
         <form action="/message/${message.id}/addcomment" method="post">
-            <textarea class="form-control" name="text" placeholder="${language.youComment}"></textarea>
+            <textarea class="form-control" name="text" placeholder="${language.youComment}" style="resize: none;"></textarea>
             <input type="submit" value="${language.sendComment}" class="btn btn-primary mt-1" />
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
         </form>

@@ -3,20 +3,30 @@
 
 <@common.page>
 <h2 class="mb-4">${language.user}: ${user.username}</h2>
-<div class="user-profile">
-    <div class="user-information">
-        <div><h5>${language.email}:</h5><span><#if user.getEmail()??>${user.getEmail()}<#else>none</#if></span></div>
-        <div>
-            <h5>${language.userInform}:</h5>
-            <span id="user-info"><#if user.info??>${user.info}<#else>${language.userInform}</#if></span>
-            <form id="send-info" action="/profile/${user.username}/changeuserinfo" method="post" hidden>
-                <textarea id="input-user-info" style="width: 100%; resize: none" name="userInfo" ><#if user.info??>${user.info}<#else >${language.userInform}</#if></textarea>
-                <input type="hidden" value="${_csrf.token}" name="_csrf" />
-            </form>
+<div class="">
+    <div class="d-flex flex-row">
+        <div class="d-flex flex-column flex-grow-1 bd-highlight">
+            <div class="d-flex">
+                <div class="d-flex">
+                    <h5 class="font-weight-bold">${language.email}:</h5>
+                    <span class="ml-3"><#if user.getEmail()??>${user.getEmail()}<#else>none</#if></span>
+                </div>
+            </div>
+            <div class="mt-4" style="word-wrap: break-word;">
+                <h5 class="font-weight-bold">${language.userInform}:</h5>
+                <span id="user-info"><#if user.info??>${user.info}<#else>${language.userInform}</#if></span>
+                <form id="send-info" action="/profile/${user.username}/changeuserinfo" method="post" hidden>
+                    <textarea id="input-user-info" style="resize: none; width: 100%; height: 150px;" name="userInfo" maxlength="600" class="form-control row"><#if user.info??>${user.info}<#else >${language.userInform}</#if></textarea>
+                    <input type="hidden" value="${_csrf.token}" name="_csrf" />
+                </form>
+            </div>
+        </div>
+        <div class="col-sm-5 bd-highlight">
+            <h5 class="font-weight-bold">Вопросы:
+            </h5>
         </div>
     </div>
-    <div class="user-notes wrapper">
-        <div class="content">
+    <div class="mt-3">
         <table class="table">
             <thead>
                 <tr>
@@ -34,7 +44,10 @@
                 </div>
                 <div class="bd-highlight">
                     <#if access>
-                        <a class="btn btn-primary mt-3" href="/profile/${user.username}/addmessage" role="button">${language.create}</a>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <input type="button" value="Фильтр" role="button" class="btn btn-primary mt-3"/>
+                            <a class="btn btn-primary mt-3" href="/profile/${user.username}/addmessage" role="button">${language.create}</a>
+                        </div>
                     </#if>
                 </div>
             </div>
@@ -62,7 +75,6 @@
                 </#list>
             </tbody>
         </table>
-        </div>
     </div>
 </div>
     <#if access><script src="/script/editInPlace.js"></script></#if>

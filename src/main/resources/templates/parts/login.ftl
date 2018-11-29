@@ -56,8 +56,8 @@
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <div class="d-flex bd-highlight col-sm-8">
-        <#if !isRegisterForm><a href="/registration" class="flex-grow-1 bd-highlight mr-2">Регистрация нового пользователя</a></#if>
-        <button class="btn btn-primary p-2 bd-highlight" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
+        <#if !isRegisterForm><a href="/registration" class="flex-grow-1 ml-auto bd-highlight mr-2">Регистрация нового пользователя</a></#if>
+        <button class="btn btn-primary p-2 bd-highlight mr-auto" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
     </div>
 </form>
 </#macro>

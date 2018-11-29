@@ -25,7 +25,7 @@ create table usr (
     username varchar(255) not null,
     lang varchar (255),
     site_design varchar (255),
-    info varchar (255),
+    info varchar (600),
     primary key (id)
 );
 
