@@ -1,10 +1,8 @@
 package com.start.web.domain;
 
 import javax.persistence.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,6 +22,16 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+
+    @ManyToMany
+    @JoinTable(
+            name = "message_rates",
+            joinColumns = {
+                    @JoinColumn(name = "message_id")
+            },
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private Set<User> rates = new HashSet<>();
 
     public Message() {
     }

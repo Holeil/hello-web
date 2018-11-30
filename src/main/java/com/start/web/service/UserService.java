@@ -1,6 +1,6 @@
 package com.start.web.service;
 
-import com.start.web.domain.Role;
+import com.start.web.domain.enums.Role;
 import com.start.web.domain.User;
 import com.start.web.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;

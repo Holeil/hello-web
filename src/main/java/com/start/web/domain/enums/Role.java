@@ -1,4 +1,4 @@
-package com.start.web.domain;
+package com.start.web.domain.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

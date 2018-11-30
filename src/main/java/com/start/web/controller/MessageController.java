@@ -1,7 +1,6 @@
 package com.start.web.controller;
 
 import com.start.web.domain.Message;
-import com.start.web.domain.Tag;
 import com.start.web.domain.User;
 import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
@@ -29,19 +28,10 @@ public class MessageController {
     private UserRepo userRepo;
 
     @Autowired
-    private MessageRepo messageRepo;
-
-    @Autowired
     private CommentRepo commentRepo;
 
     @Autowired
     private MessageService messageService;
-
-    @Autowired
-    private TagService tagService;
-
-    @Autowired
-    private TagRepo tagRepo;
 
     @GetMapping("/message/{message}")
     public String messagePage(@PathVariable Message message,

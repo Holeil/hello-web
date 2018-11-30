@@ -1,7 +1,7 @@
 package com.start.web.domain.util;
 
-import com.start.web.domain.Language;
-import com.start.web.domain.Theme;
+import com.start.web.domain.enums.Language;
+import com.start.web.domain.enums.Theme;
 import com.start.web.domain.User;
 
 public abstract class UserHelper {

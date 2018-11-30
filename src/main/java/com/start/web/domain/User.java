@@ -1,5 +1,6 @@
 package com.start.web.domain;
 
+import com.start.web.domain.enums.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

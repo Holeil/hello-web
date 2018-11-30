@@ -1,4 +1,4 @@
-package com.start.web.domain;
+package com.start.web.domain.enums;
 
 public enum  Language {
     RU("Вход", "Имя пользователя", "Пароль", "Email", "Регистрация", "Регистрация нового пользователя", "Создать", "Выйти",

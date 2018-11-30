@@ -1,4 +1,4 @@
-package com.start.web.domain;
+package com.start.web.domain.enums;
 
 public enum Theme {
     MATHEMATICS("navbar-dark bg-primary",
