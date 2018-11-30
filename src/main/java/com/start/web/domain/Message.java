@@ -2,7 +2,11 @@ package com.start.web.domain;
 
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "message")
@@ -15,7 +19,7 @@ public class Message {
     private String specialty;
     private String text;
     private String tag;
-    private String date;
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -82,10 +86,11 @@ public class Message {
     }
 
     public String getDate() {
-        return date;
+        return date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
     }
 
     public void setDate() {
-        this.date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
+        this.date = LocalDateTime.now();
     }
+
 }

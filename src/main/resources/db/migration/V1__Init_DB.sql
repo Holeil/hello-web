@@ -5,7 +5,7 @@ create table message (
     title varchar (255) not null,
     specialty varchar(255) not null,
     text varchar(2048) not null,
-    date varchar (255) not null,
+    date timestamp not null,
     tag varchar(255),
     user_id int8,
     primary key (id)
@@ -32,7 +32,7 @@ create table usr (
 create table comment (
   id int8 not null,
   text varchar (255),
-  date varchar (255),
+  date timestamp not null,
   user_id int8,
   message_id int8,
   primary key (id)

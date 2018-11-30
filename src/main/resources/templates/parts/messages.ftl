@@ -20,7 +20,7 @@
         </div>
         <div class="d-flex row mb-5">
             <div class="mr-auto bd-highlight col-sm-7">
-                <input type="text" name="tag" maxlength="60" value="<#if isUpdateMessageForm>${message.tag}</#if>" class="form-control " placeholder="${language.tags}">
+                <input type="text" name="tag" maxlength="60" value="<#if isUpdateMessageForm>${message.tag}</#if>" class="form-control " placeholder="${language.tags}: #Itransition #IStudy #ITry">
             </div>
             <div class="ml-auto bd-highlight mr-3">
                 <button type="submit" class="btn btn-primary"><#if isUpdateMessageForm>${language.update}</#if><#if !isUpdateMessageForm>${language.create}</#if></button>

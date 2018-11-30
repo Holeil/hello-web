@@ -42,15 +42,19 @@
                 <div class="d-flex bd-highlight">
                     <div class=" ml-auto bd-highlight">
                         <#if access>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <form action="/profile/${user.username}/filter" method="post">
-                                    <input type="submit" value="Фильтровать по Дате" role="button" class="btn btn-primary mt-3"/>
-                                </form>
-                                <form action="/profile/${user.username}/filterbytitle" method="post">
-                                    <input type="submit" value="Фильтровать по Названию" role="button" class="btn btn-primary mt-3"/>
+                            <div class="btn-group row" role="group" aria-label="Basic example">
+                                <form action="/profile/${user.username}/sort" method="post">
+                                    <input type="submit" name="byDate" value="Сортировать по Дате" role="button" class="btn btn-primary mt-3"/><!-- Язык-->
+                                    <input type="submit" name="byTitle" value="Сортировать по Названию" role="button" class="btn btn-primary mt-3"/><!-- Язык-->
                                     <input type="hidden" value="${_csrf.token}" name="_csrf">
                                 </form>
                                 <a class="btn btn-primary mt-3" href="/profile/${user.username}/addmessage" role="button">${language.create}</a>
+                            </div>
+                            <div class="row mt-1 mb-1">
+                                <form action="/profile/${user.username}/filter" method="get" class="d-flex bd-highlight">
+                                    <input type="text" maxlength="60" name="filter" class=" form-control col flex-grow-1 bd-highlight" placeholder="Тэг, Название, Специальность."/><!-- Язык-->
+                                    <input type="submit" value="Фильтр" class="btn btn-primary bd-highlight" />
+                                </form>
                             </div>
                         </#if>
                     </div>

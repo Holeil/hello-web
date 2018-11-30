@@ -25,9 +25,7 @@ public class CommentController {
     public String addComment(@PathVariable Message message,
                              @AuthenticationPrincipal User user,
                              @RequestParam String text) {
-        String date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Calendar.getInstance().getTime());
-
-        Comment comment = new Comment(text, date, user, message);
+        Comment comment = new Comment(text, user, message);
 
         commentRepo.save(comment);
 

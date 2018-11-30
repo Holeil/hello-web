@@ -11,10 +11,13 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class UserProfileController {
@@ -81,4 +84,75 @@ public class UserProfileController {
         return "redirect:/profile/" + username;
     }
 
+    @PostMapping("/profile/{username}/sort")
+    public String sorterMessages(@AuthenticationPrincipal User authUser,
+                                @PathVariable String username,
+                                @RequestParam Map<String, String> form,
+                                Model model) {
+        User user = userRepo.findByUsername(username);
+
+        Iterable<Message> messages;
+
+        if(form.keySet().contains("byTitle")) {
+            messages = messageRepo.sortAuthorMessageByTitle(user);
+
+        }
+        else if(form.keySet().contains("byDate")) {
+            messages = messageRepo.sortAuthorMessageByDate(user);
+
+        }
+        else {
+            messages = messageRepo.findByAuthor(user);
+
+        }
+
+        boolean access;
+
+        if(!authUser.isRole("ADMIN") && (authUser.isRole("BLOCKED") || !UserHelper.compareTwoUsers(authUser, user))) {
+            access = false;
+        }
+        else {
+            access = true;
+        }
+
+        model.addAttribute("language", UserHelper.getLangUser(authUser));
+        model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
+        model.addAttribute("user", user);
+        model.addAttribute("messages", messages);
+        model.addAttribute("access", access);
+
+        return "profile";
+    }
+
+    @GetMapping("/profile/{username}/filter")
+    public String filterMessages(@AuthenticationPrincipal User authUser,
+                                 @PathVariable String username,
+                                 Model model,
+                                 @RequestParam String filter) {
+        User user = userRepo.findByUsername(username);
+
+        boolean access;
+
+        if(!authUser.isRole("ADMIN") && (authUser.isRole("BLOCKED") || !UserHelper.compareTwoUsers(authUser, user))) {
+            access = false;
+
+            Iterable<Message> messages = messageRepo.findByAuthor(user);
+
+            model.addAttribute("messages", messages);
+        }
+        else {
+            access = true;
+
+            List<Message> messages = messageService.findByFilter(filter, user);
+
+            model.addAttribute("messages", messages);
+        }
+
+        model.addAttribute("language", UserHelper.getLangUser(authUser));
+        model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
+        model.addAttribute("user", user);
+        model.addAttribute("access", access);
+
+        return "profile";
+    }
 } 

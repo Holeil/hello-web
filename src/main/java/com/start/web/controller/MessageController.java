@@ -1,13 +1,16 @@
 package com.start.web.controller;
 
 import com.start.web.domain.Message;
+import com.start.web.domain.Tag;
 import com.start.web.domain.User;
 import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
 import com.start.web.repos.MessageRepo;
+import com.start.web.repos.TagRepo;
 import com.start.web.repos.UserRepo;
 import com.start.web.service.MessageService;
+import com.start.web.service.TagService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,6 +36,12 @@ public class MessageController {
 
     @Autowired
     private MessageService messageService;
+
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private TagRepo tagRepo;
 
     @GetMapping("/message/{message}")
     public String messagePage(@PathVariable Message message,
@@ -78,7 +87,7 @@ public class MessageController {
         if(!(user == null || title.equals("") || specialty.equals("") || text.equals("") || tag.equals(""))) {
             Message message = new Message(title, specialty, text, tag, user);
 
-            messageRepo.save(message);
+            messageService.saveMessage(message);
         }
 
         return "redirect:/profile/" + username;
@@ -132,7 +141,7 @@ public class MessageController {
             message.setTag(tag);
             message.setDate();
 
-            messageRepo.save(message);
+            messageService.saveMessage(message);
         }
 
         return "redirect:/profile/" + username;

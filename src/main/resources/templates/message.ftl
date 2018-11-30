@@ -3,6 +3,7 @@
 <#include "parts/security.ftl">
 
 <@common.page>
+<div class="container">
     <div class="card ${siteTheme.card} center-block mb-2">
         <div class="card-header ${siteTheme.cardHeader}">
             <h5>${message.title}</h5>
@@ -46,4 +47,5 @@
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
         </form>
     </#if>
+</div>
 </@common.page>

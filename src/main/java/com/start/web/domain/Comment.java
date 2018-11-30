@@ -1,9 +1,10 @@
 package com.start.web.domain;
 
-import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.CommentHelper;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,7 +14,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String text;
-    private String date;
+    private LocalDateTime date;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -35,9 +36,9 @@ public class Comment {
 
     }
 
-    public Comment(String text, String date, User author, Message message) {
+    public Comment(String text, User author, Message message) {
         this.text = text;
-        this.date = date;
+        this.date = LocalDateTime.now();
         this.author = author;
         this.message = message;
     }
@@ -63,10 +64,10 @@ public class Comment {
     }
 
     public String getDate() {
-        return date;
+        return date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
