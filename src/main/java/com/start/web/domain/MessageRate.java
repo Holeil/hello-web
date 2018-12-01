@@ -1,24 +1,23 @@
 package com.start.web.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "message_rate")
 public class MessageRate {
-    private Long messageId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private Long userId;
-    private Float rate;
+    private Long messageId;
+    private Integer rate;
 
     public MessageRate() {}
 
-    public MessageRate(Long messageId, Long userId, Float rate) {
-        this.messageId = messageId;
+    public MessageRate(Long userId, Long messageId, Integer rate) {
         this.userId = userId;
-        this.rate = rate;
-    }
-
-    public Long getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(Long messageId) {
         this.messageId = messageId;
+        this.rate = rate;
     }
 
     public Long getUserId() {
@@ -29,11 +28,27 @@ public class MessageRate {
         this.userId = userId;
     }
 
-    public Float getRate() {
+    public Long getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(Long messageId) {
+        this.messageId = messageId;
+    }
+
+    public Integer getRate() {
         return rate;
     }
 
-    public void setRate(Float rate) {
+    public void setRate(Integer rate) {
         this.rate = rate;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

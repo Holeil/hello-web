@@ -13,14 +13,14 @@ import java.util.List;
 public interface CommentRepo extends CrudRepository<Comment, Long> {
 
     @Query("select new com.start.web.domain.dto.CommentDto( " +
-            "m, " +
+            "c, " +
             "count(ml), " +
             "sum(case when ml = :user then 1 else 0 end) > 0" +
             ") " +
-            "from Comment m left join m.likes ml " +
-            "where m.message = :message " +
-            "group by m " +
-            "order by m.id asc")
+            "from Comment c left join c.likes ml " +
+            "where c.message = :message " +
+            "group by c " +
+            "order by c.id asc")
     List<CommentDto> findByMessage(@Param("message") Message message, @Param("user") User user);
 
     List<Comment> findByAuthor(User user);

@@ -9,8 +9,13 @@
             <h5>${message.title}</h5>
             <h6>${message.specialty}</h6>
         </div>
-        <div class="card-body ${siteTheme.cardFooter}">
+        <div class="card-body ${siteTheme.cardBody}">
             <p class="card-text">${converter.markdownToHtml(message.text)}</p>
+        </div>
+        <div class="card-footer ${siteTheme.cardFooter} d-flex bd-highlight">
+            <div class="ml-auto">
+                <#include "parts/rate.ftl" >
+            </div>
         </div>
     </div>
     <div class="mb-2">

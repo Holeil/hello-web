@@ -1,6 +1,7 @@
 <#import "parts/common.ftl" as common>
 <#import "parts/pager.ftl" as p>
 
+<#include "parts/security.ftl">
 <@common.page>
 <div class="d-flex">
     <div class="container">
@@ -23,14 +24,7 @@
                     <a href="/profile/${message.author.username}">${message.author.username}</a>
                     <span class="ml-3">${message.date}</span>
                 </div>
-                <div class="p-2 bd-highlight">
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    <i class="far fa-star"></i>
-                    0
-                </div>
+                <#include "parts/rate.ftl" >
             </div>
         </div>
         </#list>

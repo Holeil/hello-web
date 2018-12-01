@@ -1,6 +1,7 @@
 package com.start.web.repos;
 
 import com.start.web.domain.Message;
+import com.start.web.domain.MessageRate;
 import com.start.web.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,16 +17,12 @@ public interface MessageRepo extends CrudRepository<Message, Long> {
     Iterable<Message> findByAuthor(User user);
 
     @Query(
-            "from Message m " +
-            "where m.author = :user " +
-            "order by m.title asc "
+            "from Message m where m.author = :user order by m.title asc "
     )
     Iterable<Message> sortAuthorMessageByTitle(@Param("user") User user);
 
     @Query(
-            "from Message m " +
-            "where m.author = :user " +
-            "order by m.date desc "
+            "from Message m where m.author = :user order by m.date desc "
     )
     Iterable<Message> sortAuthorMessageByDate(@Param("user") User user);
 

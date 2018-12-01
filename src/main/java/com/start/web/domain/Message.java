@@ -23,16 +23,6 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
 
-    @ManyToMany
-    @JoinTable(
-            name = "message_rates",
-            joinColumns = {
-                    @JoinColumn(name = "message_id")
-            },
-            inverseJoinColumns = {@JoinColumn(name = "user_id")}
-    )
-    private Set<User> rates = new HashSet<>();
-
     public Message() {
     }
 
@@ -95,6 +85,10 @@ public class Message {
 
     public String getDate() {
         return date.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+    }
+
+    public LocalDateTime getDateAtLocalDateTime() {
+        return date;
     }
 
     public void setDate() {

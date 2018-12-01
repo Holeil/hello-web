@@ -56,14 +56,4 @@ public class CommentDto {
         return meLiked;
     }
 
-    @Override
-    public String toString() {
-        return "CommentDto{" +
-                "id=" + id +
-                ", author=" + author +
-                ", message=" + message +
-                ", likes=" + likes +
-                ", meLiked=" + meLiked +
-                '}';
-    }
 }

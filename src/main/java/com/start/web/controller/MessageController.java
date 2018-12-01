@@ -1,24 +1,24 @@
 package com.start.web.controller;
 
 import com.start.web.domain.Message;
+import com.start.web.domain.MessageRate;
 import com.start.web.domain.User;
 import com.start.web.domain.dto.CommentDto;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.CommentRepo;
-import com.start.web.repos.MessageRepo;
-import com.start.web.repos.TagRepo;
+import com.start.web.repos.MessageRateRepo;
 import com.start.web.repos.UserRepo;
+import com.start.web.service.MessageRateService;
 import com.start.web.service.MessageService;
-import com.start.web.service.TagService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
@@ -33,6 +33,12 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private MessageRateRepo messageRateRepo;
+
+    @Autowired
+    private MessageRateService messageRateService;
+
     @GetMapping("/message/{message}")
     public String messagePage(@PathVariable Message message,
                               Model model,
@@ -45,6 +51,8 @@ public class MessageController {
         model.addAttribute("converter", new PegDownProcessor());
         model.addAttribute("message", message);
         model.addAttribute("comments", comments);
+        model.addAttribute("messageRateRepo", messageRateRepo);
+        model.addAttribute("messageRateService", messageRateService);
 
         return "message";
     }
@@ -137,4 +145,30 @@ public class MessageController {
         return "redirect:/profile/" + username;
     }
 
+    @PostMapping("/message/{messageId}/rates")
+    public String rate(@AuthenticationPrincipal User user,
+                       @PathVariable Long messageId,
+                       @RequestParam("rate") String rate,
+                       RedirectAttributes redirectAttributes,
+                       @RequestHeader(required = false) String referer) {
+        Iterable<MessageRate> messageRates = messageRateRepo.findByMessageIdAndUserId(messageId, user.getId());
+
+        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
+
+        components.getQueryParams()
+                .entrySet()
+                .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
+
+        for(MessageRate messageRate : messageRates) {
+            if(messageRate.getUserId().equals(user.getId())) {
+                messageRateService.changeRate(messageRate, Integer.parseInt(rate));
+
+                return "redirect:" + components.getPath();
+            }
+        }
+
+        messageRateRepo.save(new MessageRate(user.getId(), messageId, Integer.parseInt(rate)));
+
+        return "redirect:" + components.getPath();
+    }
 } 
