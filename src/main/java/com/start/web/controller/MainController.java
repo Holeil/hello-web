@@ -1,13 +1,14 @@
 package com.start.web.controller;
 
 import com.start.web.domain.Message;
-import com.start.web.domain.MessageRate;
 import com.start.web.domain.User;
 import com.start.web.domain.util.UserHelper;
 import com.start.web.repos.MessageRateRepo;
 import com.start.web.repos.MessageRepo;
 import com.start.web.repos.UserRepo;
 import com.start.web.service.MessageRateService;
+import com.start.web.service.MessageService;
+import com.start.web.service.TagService;
 import org.pegdown.PegDownProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,13 @@ public class MainController {
     @Autowired
     private MessageRateService messageRateService;
 
-    @GetMapping("/")
+    @Autowired
+    private TagService tagService;
+
+    @Autowired
+    private MessageService messageService;
+
+    @GetMapping({"/", "/message"})
     public String greeting(@AuthenticationPrincipal User user,
                            Model model,
                            @PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC) Pageable pageable) {
@@ -51,6 +58,8 @@ public class MainController {
         model.addAttribute("url", "/");
         model.addAttribute("messageRateRepo", messageRateRepo);
         model.addAttribute("messageRateService", messageRateService);
+        model.addAttribute("tags", tagService.findLastTags(9));
+        model.addAttribute("fiveMessages", messageService.getTopMessages(10));
 
         return "main";
     }

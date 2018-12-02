@@ -6,8 +6,7 @@ import com.start.web.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MessageService {
@@ -20,8 +19,13 @@ public class MessageService {
     @Autowired
     private TagService tagService;
 
+    @Autowired
+    private MessageRateService messageRateService;
+
     public void deleteMessage(Message message) {
         commentService.deleteCommentsForMessage(message);
+
+        messageRateService.deleteMessageRate(message);
 
         messageRepo.delete(message);
     }
@@ -31,6 +35,8 @@ public class MessageService {
 
         for(Message message : messages) {
             commentService.deleteCommentsForMessage(message);
+
+            messageRateService.deleteMessageRate(message);
         }
 
         messageRepo.deleteAll(messages);
@@ -72,6 +78,61 @@ public class MessageService {
         tagService.addTagsInRepository(message.getTag());
 
         messageRepo.save(message);
+    }
+
+    public List<Message> getTopMessages(int count) {
+        Map<Float, List<Message>> rateAndMessages = new TreeMap<>();
+
+        List<Message> messages = messageRepo.findAllAndSortById();
+
+
+        // Find sum rate for all messages and add rate <-> message in HashTabel
+        for(Message message : messages) {
+            Float rate = messageRateService.countRate(message);
+
+            if(rateAndMessages.containsKey(rate)) {
+                rateAndMessages.get(rate).add(message);
+
+            }
+            else {
+                List<Message> mess = new ArrayList<>();
+
+                mess.add(message);
+
+                rateAndMessages.put(rate, mess);
+            }
+        }
+
+        List<Message> topMessage = new ArrayList<>();
+
+        Set<Float> rates = rateAndMessages.keySet();
+
+        //Get sorted messages and add in List from better interactions.
+        if(messages.size() <= count) {
+            for(int i = rates.size(); i > 0; i--) {
+                topMessage.addAll(rateAndMessages.get(rates.toArray()[i - 1]));
+            }
+
+            return topMessage;
+        }
+
+        int iterator = 0;
+
+        for(int i = rates.size(); i > rates.size() - count; i--) {
+            if(iterator < count) {
+                for(Message message : rateAndMessages.get(rates.toArray()[i-1])) {
+                    if(iterator >= count) break;
+
+                    topMessage.add(message);
+
+                    iterator++;
+                }
+            }
+
+            if(iterator >= count) break;
+        }
+
+        return topMessage;
     }
 
 }

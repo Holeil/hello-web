@@ -5,6 +5,9 @@ import com.start.web.repos.TagRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class TagService {
     @Autowired
@@ -14,8 +17,6 @@ public class TagService {
         for(String tag : tags.split("\\s+")) {
             Tag newTag = new Tag();
 
-            tag = tag.toLowerCase();
-
             newTag.setId(tag);
 
             if(!tagRepo.findById(tag).isPresent()) {
@@ -23,4 +24,22 @@ public class TagService {
             }
         }
     }
+
+    public List<Tag> findLastTags(int count) {
+        List<Tag> arrTags = new ArrayList<>();
+
+        List<Tag> tags = tagRepo.findAll();
+
+        if(count >= tags.size()) {
+            return tags;
+        }
+
+        for(int i = tags.size() - count; i < tags.size(); i++) {
+            arrTags.add(tags.get(i));
+        }
+
+        return arrTags;
+
+    }
+
 } 

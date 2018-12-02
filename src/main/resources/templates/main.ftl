@@ -31,11 +31,24 @@
         <@p.pager url page />
     </div>
     <div class="col-sm-4">
-        <div class="mb-2">
-            #ТутТЭГИ
+        <div class="col-sm-8 mb-3 bg-info">
+            <#list tags as tag>
+                <span>${tag.id}</span>
+            </#list>
         </div>
-        <div>
-            <h4 class="font-weight-bold">Топ 5 конспектов</h4>
+        <div class="">
+            <h4 class="font-weight-bold">Топ 10 конспектов</h4>
+            <table class="table">
+                <tbody>
+                    <#list fiveMessages as message>
+                        <tr>
+                            <td><a href="/message/${message.id}">${message.title}</a></td>
+                            <td>${message.specialty}</td>
+                            <td><b>${messageRateService.countRate(message)}</b> <i class="fas fa-star"></i></td>
+                        </tr>
+                    </#list>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
