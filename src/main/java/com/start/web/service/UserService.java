@@ -30,6 +30,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private MessageService messageService;
 
+    @Autowired
+    private MessageRateService messageRateService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepo.findByUsername(username);
@@ -100,6 +103,8 @@ public class UserService implements UserDetailsService {
             commentService.deleteUserComment(user);
 
             commentService.removeUserLikes(user);
+
+            messageRateService.deleteMessageRateByUser(user);
 
             messageService.deleteMessageByAuthor(user);
 

@@ -25,7 +25,7 @@ public class MessageService {
     public void deleteMessage(Message message) {
         commentService.deleteCommentsForMessage(message);
 
-        messageRateService.deleteMessageRate(message);
+        messageRateService.deleteMessageRateByMessage(message);
 
         messageRepo.delete(message);
     }
@@ -36,7 +36,7 @@ public class MessageService {
         for(Message message : messages) {
             commentService.deleteCommentsForMessage(message);
 
-            messageRateService.deleteMessageRate(message);
+            messageRateService.deleteMessageRateByMessage(message);
         }
 
         messageRepo.deleteAll(messages);

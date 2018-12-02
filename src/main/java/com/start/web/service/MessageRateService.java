@@ -2,6 +2,7 @@ package com.start.web.service;
 
 import com.start.web.domain.Message;
 import com.start.web.domain.MessageRate;
+import com.start.web.domain.User;
 import com.start.web.repos.MessageRateRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +34,14 @@ public class MessageRateService {
         return sumRate / count;
     }
 
-    public void deleteMessageRate(Message message) {
+    public void deleteMessageRateByMessage(Message message) {
         Iterable<MessageRate> messageRates = messageRateRepo.findByMessageId(message.getId());
+
+        messageRateRepo.deleteAll(messageRates);
+    }
+
+    public void deleteMessageRateByUser(User user) {
+        Iterable<MessageRate> messageRates = messageRateRepo.findByUserId(user.getId());
 
         messageRateRepo.deleteAll(messageRates);
     }

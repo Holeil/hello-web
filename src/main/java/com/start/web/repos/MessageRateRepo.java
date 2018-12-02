@@ -8,4 +8,6 @@ public interface MessageRateRepo extends CrudRepository<MessageRate, String> {
 
     Iterable<MessageRate> findByMessageId(Long messageId);
 
+    Iterable<MessageRate> findByUserId(Long userId);
+
 }
