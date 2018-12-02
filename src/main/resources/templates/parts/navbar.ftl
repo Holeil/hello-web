@@ -36,4 +36,5 @@
             </a>
         </#if>
     </div>
+    <#include "search.ftl">
 </nav>

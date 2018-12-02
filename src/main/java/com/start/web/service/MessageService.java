@@ -1,6 +1,7 @@
 package com.start.web.service;
 
 import com.start.web.domain.Message;
+import com.start.web.domain.MessageSearch;
 import com.start.web.domain.User;
 import com.start.web.repos.MessageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ public class MessageService {
 
     @Autowired
     private MessageRateService messageRateService;
+
+    @Autowired
+    private MessageSearchService messageSearchService;
 
     public void deleteMessage(Message message) {
         commentService.deleteCommentsForMessage(message);
@@ -75,9 +79,9 @@ public class MessageService {
     }
 
     public void saveMessage(Message message) {
-        tagService.addTagsInRepository(message.getTag());
+        messageSearchService.saveMessage(new MessageSearch(messageRepo.save(message)));
 
-        messageRepo.save(message);
+        tagService.addTagsInRepository(message.getTag());
     }
 
     public List<Message> getTopMessages(int count) {
