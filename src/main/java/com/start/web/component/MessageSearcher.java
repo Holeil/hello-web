@@ -33,6 +33,8 @@ public class MessageSearcher {
                         .onFields("title")
                         .andField("text")
                         .andField("tag")
+                        .andField("comment.text")
+                        .andField("specialty")
                         .matching(text)
                         .createQuery();
 

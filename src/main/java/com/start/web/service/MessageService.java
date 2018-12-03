@@ -1,5 +1,6 @@
 package com.start.web.service;
 
+import com.start.web.domain.Comment;
 import com.start.web.domain.Message;
 import com.start.web.domain.MessageSearch;
 import com.start.web.domain.User;
@@ -29,6 +30,8 @@ public class MessageService {
     public void deleteMessage(Message message) {
         commentService.deleteCommentsForMessage(message);
 
+        messageSearchService.deleteMessage(message);
+
         messageRateService.deleteMessageRateByMessage(message);
 
         messageRepo.delete(message);
@@ -39,6 +42,8 @@ public class MessageService {
 
         for(Message message : messages) {
             commentService.deleteCommentsForMessage(message);
+
+            messageSearchService.deleteMessage(message);
 
             messageRateService.deleteMessageRateByMessage(message);
         }

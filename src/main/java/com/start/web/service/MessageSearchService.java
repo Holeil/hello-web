@@ -1,8 +1,11 @@
 package com.start.web.service;
 
 import com.start.web.component.MessageSearcher;
+import com.start.web.domain.Comment;
+import com.start.web.domain.CommentSearch;
 import com.start.web.domain.Message;
 import com.start.web.domain.MessageSearch;
+import com.start.web.repos.CommentSearchRepo;
 import com.start.web.repos.MessageSearchRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,9 @@ public class MessageSearchService {
     private MessageSearchRepo messageSearchRepo;
 
     @Autowired
+    CommentSearchRepo commentSearchRepo;
+
+    @Autowired
     private MessageSearcher messageSearcher;
 
     public List<MessageSearch> findAll() {
@@ -32,4 +38,19 @@ public class MessageSearchService {
     public MessageSearch saveMessage(MessageSearch message) {
         return messageSearchRepo.save(message);
     }
+
+    public void deleteMessage(Message message) {
+        commentSearchRepo.deleteAll(commentSearchRepo.findByMessageId(message.getId()));
+
+        messageSearchRepo.delete(messageSearchRepo.findByMessageId(message.getId()));
+    }
+
+    public MessageSearch findMessageById(Long id) {
+        return messageSearchRepo.findByMessageId(id);
+    }
+
+    public CommentSearch saveComment(CommentSearch commentSearch) {
+        return commentSearchRepo.save(commentSearch);
+    }
+
 } 

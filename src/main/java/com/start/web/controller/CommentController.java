@@ -1,9 +1,9 @@
 package com.start.web.controller;
 
-import com.start.web.domain.Comment;
-import com.start.web.domain.Message;
-import com.start.web.domain.User;
+import com.start.web.domain.*;
 import com.start.web.repos.CommentRepo;
+import com.start.web.service.CommentService;
+import com.start.web.service.MessageSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,10 @@ import java.util.Set;
 @Controller
 public class CommentController {
     @Autowired
-    private CommentRepo commentRepo;
+    private CommentService commentService;
+
+    @Autowired
+    private MessageSearchService messageSearchService;
 
     @PostMapping("/message/{message}/addcomment")
     public String addComment(@PathVariable Message message,
@@ -25,7 +28,9 @@ public class CommentController {
                              @RequestParam String text) {
         Comment comment = new Comment(text, user, message);
 
-        commentRepo.save(comment);
+        commentService.saveComment(message, comment);
+
+        MessageSearch ms = messageSearchService.findMessageById(message.getId());
 
         return "redirect:/message/" + message.getId();
     }

@@ -1,8 +1,6 @@
 package com.start.web.service;
 
-import com.start.web.domain.Comment;
-import com.start.web.domain.Message;
-import com.start.web.domain.User;
+import com.start.web.domain.*;
 import com.start.web.domain.dto.CommentDto;
 import com.start.web.repos.CommentRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,9 @@ import java.util.List;
 public class CommentService {
     @Autowired
     private CommentRepo commentRepo;
+
+    @Autowired
+    private MessageSearchService messageSearchService;
 
     public void deleteCommentsForMessage(Message message) {
         List<CommentDto> comments = commentRepo.findByMessage(message, null);
@@ -34,5 +35,18 @@ public class CommentService {
         for(Comment comment : comments) {
             comment.getLikes().remove(user);
         }
+    }
+
+    public void saveComment(Message message, Comment comment) {
+        MessageSearch ms = messageSearchService.findMessageById(message.getId());
+
+        Comment newComment = commentRepo.save(comment);
+
+        CommentSearch cs = new CommentSearch(newComment);
+
+        ms.getComment().add(cs);
+
+        messageSearchService.saveComment(cs);
+
     }
 } 
