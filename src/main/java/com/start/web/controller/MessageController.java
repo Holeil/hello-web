@@ -79,14 +79,41 @@ public class MessageController {
                                 @RequestParam String title,
                                 @RequestParam String specialty,
                                 @RequestParam String text,
-                                @RequestParam String tag) {
+                                @RequestParam String tag,
+                                @AuthenticationPrincipal User authUser,
+                                Model model) {
         User user = userRepo.findByUsername(username);
 
-        if(!(user == null || title.equals("") || specialty.equals("") || text.equals("") || tag.equals(""))) {
-            Message message = new Message(title, specialty, text, tag, user);
+        boolean key = false;
 
-            messageService.saveMessage(message);
+        if(title.length() > 100 || title.length() < 3) {
+            model.addAttribute("titleError", "Название содержит 3-100 символов");
+            key = true;
         }
+        if(specialty.length() > 24 || specialty.length() < 5) {
+            model.addAttribute("specialtyError", "Специальность содержит 5-100 символов");
+            key = true;
+        }
+        if(text.length() > 2000 || text.length() < 1) {
+            model.addAttribute("textError", "Текст содержит 1-2000 символов");
+            key = true;
+        }
+        if(tag.length() > 60 || tag.length() < 3) {
+            model.addAttribute("tagError", "Тэги содержит 3-60 символов");
+            key = true;
+        }
+
+        if(key) {
+            model.addAttribute("language", UserHelper.getLangUser(authUser));
+            model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
+            model.addAttribute("user", user);
+
+            return "addmessage";
+        }
+
+        Message message = new Message(title, specialty, text, tag, user);
+
+        messageService.saveMessage(message);
 
         return "redirect:/profile/" + username;
     }
@@ -131,16 +158,45 @@ public class MessageController {
                                 @RequestParam String title,
                                 @RequestParam String specialty,
                                 @RequestParam String text,
-                                @RequestParam String tag) {
-        if(!(title.equals("") || specialty.equals("") || text.equals("") || tag.equals(""))) {
-            message.setTitle(title);
-            message.setSpecialty(specialty);
-            message.setText(text);
-            message.setTag(tag);
-            message.setDate();
+                                @RequestParam String tag,
+                                Model model,
+                                @AuthenticationPrincipal User authUser) {
+        User user = userRepo.findByUsername(username);
 
-            messageService.saveMessage(message);
+        boolean key = false;
+
+        if(title.length() > 100 || title.length() < 3) {
+            model.addAttribute("titleError", "Название содержит 3-100 символов");
+            key = true;
         }
+        if(specialty.length() > 24 || specialty.length() < 5) {
+            model.addAttribute("specialtyError", "Специальность содержит 5-100 символов");
+            key = true;
+        }
+        if(text.length() > 2000 || text.length() < 1) {
+            model.addAttribute("textError", "Текст содержит 1-2000 символов");
+            key = true;
+        }
+        if(tag.length() > 60 || tag.length() < 3) {
+            model.addAttribute("tagError", "Тэги содержит 3-60 символов");
+            key = true;
+        }
+
+        if(key) {
+            model.addAttribute("language", UserHelper.getLangUser(authUser));
+            model.addAttribute("siteTheme", UserHelper.getThemeUser(authUser));
+            model.addAttribute("user", user);
+
+            return "updatemessage";
+        }
+
+        message.setTitle(title);
+        message.setSpecialty(specialty);
+        message.setText(text);
+        message.setTag(tag);
+        message.setDate();
+
+        messageService.saveMessage(message);
 
         return "redirect:/profile/" + username;
     }

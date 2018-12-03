@@ -13,6 +13,9 @@
             <p class="card-text">${converter.markdownToHtml(message.text)}</p>
         </div>
         <div class="card-footer ${siteTheme.cardFooter} d-flex bd-highlight">
+            <div class="mr-auto">
+                ${message.tag}
+            </div>
             <div class="ml-auto">
                 <#include "parts/rate.ftl" >
             </div>
@@ -47,7 +50,12 @@
     </div>
     <#if isUser>
         <form action="/message/${message.id}/addcomment" method="post">
-            <textarea class="form-control" name="text" placeholder="${language.youComment}" style="resize: none;"></textarea>
+            <textarea class="form-control ${(commentError??)?string('is-invalid', '')}" name="text" placeholder="${language.youComment}" style="resize: none;"></textarea>
+            <#if commentError??>
+                <div class="invalid-feedback">
+                    ${commentError}
+                </div>
+            </#if>
             <input type="submit" value="${language.sendComment}" class="btn btn-primary mt-1" />
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
         </form>

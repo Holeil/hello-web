@@ -24,6 +24,8 @@ public class MessageSearcher {
     private EntityManager entityManager;
 
     public Page<MessageSearch> searchMessages(String text, Pageable page) {
+        if(text.isEmpty()) return null;
+
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(entityManager);
 
         QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(MessageSearch.class).get();

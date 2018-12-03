@@ -3,9 +3,11 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Имя пользователя:</label>
         <div class="col-sm-6">
-            <input type="text" name="username" value="<#if user??>${user.username}</#if>"
+            <input type="text" name="username"
+                   maxlength="16" value="<#if user??>${user.username}</#if>"
                    class="form-control ${(usernameError??)?string('is-invalid', '')}"
-                   placeholder="Username" />
+                   placeholder="Username"
+                   pattern="^[A-Za-z0-9_]{1,16}$"/>
             <#if usernameError??>
                 <div class="invalid-feedback">
                     ${usernameError}
@@ -16,9 +18,10 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">Пароль:</label>
         <div class="col-sm-6">
-            <input type="password" name="password"
+            <input type="password" name="password" maxlength="16"
                    class="form-control ${(passwordError??)?string('is-invalid', '')}"
-                   placeholder="Password" />
+                   placeholder="Password"
+                   pattern="^[A-Za-z0-9_]{1,16}$"/>
             <#if passwordError??>
                 <div class="invalid-feedback">
                     ${passwordError}
@@ -30,7 +33,7 @@
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Повторите пароль:</label>
             <div class="col-sm-6">
-                <input type="password" name="password2"
+                <input type="password" name="password2" maxlength="16"
                        class="form-control ${(password2Error??)?string('is-invalid', '')}"
                        placeholder="Retype password" />
                 <#if password2Error??>
@@ -56,8 +59,8 @@
     </#if>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
     <div class="d-flex bd-highlight col-sm-8">
-        <#if !isRegisterForm><a href="/registration" class="flex-grow-1 ml-auto bd-highlight mr-2">Регистрация нового пользователя</a></#if>
-        <button class="btn btn-primary p-2 bd-highlight mr-auto" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
+        <#if !isRegisterForm><a href="/registration" class="mr-auto pt-2 bd-highlight">Регистрация нового пользователя</a></#if>
+        <button class="btn btn-primary p-2 bd-highlight ml-auto" type="submit"><#if isRegisterForm>Создать<#else>Войти</#if></button>
     </div>
 </form>
 </#macro>

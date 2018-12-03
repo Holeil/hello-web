@@ -16,7 +16,7 @@
         </tr>
         </thead>
         <tbody>
-            <#list messages.content as message>
+            <#list messages as message>
                 <tr>
                     <td>
                         <a href="/message/${message.messageId}">

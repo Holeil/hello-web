@@ -47,6 +47,9 @@ public class CommentService {
         ms.getComment().add(cs);
 
         messageSearchService.saveComment(cs);
+    }
 
+    public List<CommentDto> findByMessage(Message message, User user) {
+        return commentRepo.findByMessage(message, user);
     }
 } 

@@ -2,11 +2,11 @@ create sequence hibernate_sequence start 1 increment 1;
 
 create table message (
     id int8 not null,
-    title varchar (255) not null,
-    specialty varchar(255) not null,
+    title varchar (128) not null,
+    specialty varchar(32) not null,
     text varchar(2048) not null,
     date timestamp not null,
-    tag varchar(255),
+    tag varchar(64),
     user_id int8,
     primary key (id)
 );
@@ -22,7 +22,7 @@ create table usr (
     active boolean not null,
     email varchar(255),
     password varchar(255) not null,
-    username varchar(255) not null,
+    username varchar(32) not null,
     lang varchar (255),
     site_design varchar (255),
     info varchar (600),

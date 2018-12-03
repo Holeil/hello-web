@@ -16,7 +16,8 @@
 </head>
 <body>
 <#include "navbar.ftl">
-<div class="container-fluid mt-5 mb-5">
+    <#include "search.ftl">
+<div class="container-fluid mt-1 mb-5">
 <#nested>
 </div>
 <#include "footer.ftl">

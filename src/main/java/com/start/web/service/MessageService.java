@@ -1,6 +1,5 @@
 package com.start.web.service;
 
-import com.start.web.domain.Comment;
 import com.start.web.domain.Message;
 import com.start.web.domain.MessageSearch;
 import com.start.web.domain.User;
@@ -84,7 +83,10 @@ public class MessageService {
     }
 
     public void saveMessage(Message message) {
-        messageSearchService.saveMessage(new MessageSearch(messageRepo.save(message)));
+        if(messageSearchService.findMessageById(message.getId()) == null)
+            messageSearchService.saveMessage(new MessageSearch(messageRepo.save(message)));
+        else
+            messageSearchService.saveMessage(messageSearchService.findMessageById(message.getId()));
 
         tagService.addTagsInRepository(message.getTag());
     }

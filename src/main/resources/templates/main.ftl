@@ -42,7 +42,7 @@
                 <tbody>
                     <#list fiveMessages as message>
                         <tr>
-                            <td><a href="/message/${message.id}">${message.title}</a></td>
+                            <td class="col-sm-3" style="overflow: hidden; text-overflow: ellipsis;max-width: 10px"><a href="/message/${message.id}">${message.title}</a></td>
                             <td>${message.specialty}</td>
                             <td><b>${messageRateService.countRate(message)}</b> <i class="fas fa-star"></i></td>
                         </tr>

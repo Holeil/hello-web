@@ -1,12 +1,14 @@
 package com.start.web.domain;
 
 import com.start.web.domain.enums.Role;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.Set;
 
@@ -16,17 +18,20 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotBlank(message = "Username cannot be empty")
+
+    @NotBlank(message = "Имя пользователя не может быть пустым!")
     private String username;
-    @NotBlank(message = "Password cannot be empty")
+
+    @NotBlank(message = "Пароль не может быть пустым!")
     private String password;
+
     private boolean active;
     private String siteDesign;
     private String lang;
     private String info;
 
-    @Email(message = "Email is not correct")
-    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Email не корректен")
+    @NotBlank(message = "Email не может быть пустым")
     private String email;
     private String activationCode;
 
